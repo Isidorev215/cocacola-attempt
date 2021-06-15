@@ -1,20 +1,31 @@
 <template>
   <nav id="nav">
-    <div class="nav-item logo-home">
-      <router-link :to="{ name: 'Home'}">Home</router-link>
-    </div>
-    <ul class="nav-item nav-links">
-      <li><router-link :to="{ name: 'Products'}">PRODUCTS</router-link></li>
-      <li><router-link :to="{ name: 'Whatsnew'}">WHAT'S NEW</router-link></li>
-      <li><router-link :to="{ name: 'Newsletter'}">NEWSLETTER</router-link></li>
-      <li><router-link :to="{ name: 'Contactus'}">CONTACT US</router-link></li>
-    </ul>
-    <div class="nav-item purchase-btn">
-      <router-link :to="{ name: 'Products'}">BUY PRODUCT</router-link>
-    </div>
+    
+    <transition name="logoAnime" appear>
+      <div class="nav-item logo-home">
+        <router-link :to="{ name: 'Home'}">Home</router-link>
+      </div>
+    </transition>
+
+    <transition name="navLinksAnime" appear>
+      <ul class="nav-item nav-links">
+        <li><router-link :to="{ name: 'Products'}">PRODUCTS</router-link></li>
+        <li><router-link :to="{ name: 'Whatsnew'}">WHAT'S NEW</router-link></li>
+        <li><router-link :to="{ name: 'Newsletter'}">NEWSLETTER</router-link></li>
+        <li><router-link :to="{ name: 'Contactus'}">CONTACT US</router-link></li>
+      </ul>
+    </transition>
+    
+    <transition name="purchaseBtnAnime" appear>
+      <div class="nav-item purchase-btn">
+        <router-link :to="{ name: 'Products'}">BUY PRODUCT</router-link>
+      </div>
+    </transition>
+    
   </nav>
   <router-view/>
 </template>
+
 
 <style>
 #app {
@@ -84,5 +95,30 @@
 #nav .purchase-btn a.router-link-exact-active{
   color: white;
   border: 2px solid rgb(255, 54, 54);
+}
+
+/* Animation things */
+.logoAnime-enter-from{
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.logoAnime-enter-active{
+  transition: all 1.1s ease;
+}
+
+.navLinksAnime-enter-from{
+  opacity: 0;
+  transform: translateY(-100%);
+}
+.navLinksAnime-enter-active{
+  transition: all 1.1s ease;
+}
+
+.purchaseBtnAnime-enter-from{
+  opacity: 0;
+  transform: translateX(100%);
+}
+.purchaseBtnAnime-enter-active{
+  transition: all 1.3s ease;
 }
 </style>
