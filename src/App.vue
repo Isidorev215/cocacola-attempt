@@ -21,9 +21,13 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
   color: white;
+  height: 100vh;
 }
 #nav {
   padding: 3% 5% 0;
+  position: relative;
+  z-index: 1000;
+  height: 10vh;
 }
 #nav .nav-item a {
   font-weight: light;
@@ -74,8 +78,11 @@
   border-radius: 25px;
   padding: 4% 7%;
 }
+#nav .purchase-btn a:hover{
+  background-color: rgb(255, 54, 54);
+} 
 #nav .purchase-btn a.router-link-exact-active{
   color: white;
-  border: 2px solid rgb(116, 10, 10);
+  border: 2px solid rgb(255, 54, 54);
 }
 </style>
