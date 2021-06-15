@@ -1,10 +1,13 @@
 <template>
-  The Home
+  Whats New
 </template>
 
 <script>
-
 export default {
-  name: 'Home'
+
 }
 </script>
+
+<style>
+
+</style>
