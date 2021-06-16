@@ -5,6 +5,12 @@ import Whatsnew from '../views/Whatsnew.vue'
 import Newsletter from '../views/Newsletter.vue'
 import Contactus from '../views/Contactus.vue'
 
+// const delay = (to, from, next) => {
+//   setTimeout(() => {
+//     next()
+//   }, 2000)
+// }
+
 const routes = [
   {
     path: '/',
@@ -14,7 +20,8 @@ const routes = [
   {
     path: '/products',
     name: 'Products',
-    component: Products
+    component: Products,
+    // beforeEnter: delay
   },
   {
     path: '/whatsnew',

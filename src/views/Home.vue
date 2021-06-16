@@ -1,39 +1,56 @@
 <template>
   <main id="landing-page">
-    <img src="../assets/cocacola-cans/classic-coke-two.png" alt="Classic Cocacola can">
+    <transition appear @before-enter="beforeEnterImg" @enter="enterImg">
+      <img src="../assets/cocacola-cans/classic-coke-two.png" alt="Classic Cocacola can">
+    </transition>
+
     <section class="main-section grid-container">
-      <article class="item1 grid-children">
-        <h1>Things go better with Coke.</h1>
-        <h6>All your favourite flavour. The gang all here compare flavours, get numerous faces and check out ingredients</h6>
-        <button class="to-product-route" @click="toProducts">VIEW PRODUCT</button>
-      </article>
-      <aside class="item2 grid-children">
-        <Textcarousel/>
-      </aside>
-      <div class="item3 grid-children">
-        <video ref="vid" autoplay loop>
-          <source src="../assets/a-glass-of-fizzy-coke.mp4" type="video/mp4">
-        </video>
-        <button @click="toggleplay">
-          <span v-if="isPlaying" class="material-icons">pause</span>
-          <span v-else class="material-icons">play_arrow</span>
-        </button>
-        <div class="inner-text">
-          <h4>COKE ZERO</h4>
-          <p>Loremi ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem similique qui recusandae doloremque perferendis!</p>
-        </div>
-      </div>
-      <div class="item4 grid-children">
-        <div class="inner-text">
-          <h4>COKE HISTORY</h4>
-          <p>Loremi ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem similique qui recusandae doloremque perferendis!</p>
-        </div>
-      </div>
+
+      <transition appear @before-enter="beforeEnterArticle" @enter="enterArticle">
+          <article class="item1 grid-children" key="1">
+            <h1>Things go better with Coke.</h1>
+            <h6>All your favourite flavour. The gang all here compare flavours, get numerous faces and check out ingredients</h6>
+            <button class="to-product-route" @click="toProducts">VIEW PRODUCT</button>
+          </article>
+      </transition>
+
+      <transition appear @before-enter="beforeEnterCarousel" @enter="enterCarousel">
+          <aside class="item2 grid-children" key="2">
+            <Textcarousel/>
+          </aside>
+      </transition>
+
+      <transition appear @before-enter="beforeEnterVideo" @enter="enterVideo">
+          <div class="item3 grid-children" key="3">
+            <video ref="vid" autoplay loop>
+              <source src="../assets/a-glass-of-fizzy-coke.mp4" type="video/mp4">
+            </video>
+            <button @click="toggleplay">
+              <span v-if="isPlaying" class="material-icons">pause</span>
+              <span v-else class="material-icons">play_arrow</span>
+            </button>
+            <div class="inner-text">
+              <h4>COKE ZERO</h4>
+              <p>Loremi ipsum dolor sit amet consectetur adipisicing eliti. Aspernatur autem similique qui recusandae doloremque perferendis!</p>
+            </div>
+          </div>
+      </transition>
+
+      <transition appear @before-enter="beforeEnterHistory" @enter="enterHistory">
+          <div class="item4 grid-children" key="4">
+            <div class="inner-text">
+              <h4>COKE HISTORY</h4>
+              <p>Loremi ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem similique qui recusandae doloremque perferendis!</p>
+            </div>
+          </div>
+      </transition>
+
     </section>
   </main>
 </template>
 
 <script>
+import anime from 'animejs/lib/anime.es.js';
 import Textcarousel from '@/components/Textcarousel.vue'
 export default {
   name: 'Home',
@@ -55,6 +72,76 @@ export default {
         this.$refs.vid.pause()
         this.isPlaying = false
       }
+    },
+    
+    beforeEnterImg(el){
+      el.style.transform = "translateY(200%)"
+      el.style.opacity = 0
+    },
+    enterImg(el){
+      anime({
+        targets: el,
+        translateY: 0,
+        opacity: 1,
+        duration: 1000,
+        easing: 'easeInOutSine'
+      })
+    },
+
+    beforeEnterArticle(el){
+      el.style.transform = "translateY(200%)"
+      el.style.opacity = 0
+    },
+    enterArticle(el){
+      anime({
+        targets: el,
+        translateY: 0,
+        opacity: 1,
+        duration: 1500,
+        easing: 'easeInOutSine'
+      })
+    },
+
+    beforeEnterCarousel(el){
+      el.style.transform = "translateY(200%)"
+      el.style.opacity = 0
+    },
+    enterCarousel(el){
+      anime({
+        targets: el,
+        translateY: 0,
+        opacity: 1,
+        duration: 1000,
+        easing: 'easeInOutSine'
+      })
+    },
+
+    beforeEnterVideo(el){
+      el.style.transform = "translateY(200%)"
+      el.style.opacity = 0
+    },
+    enterVideo(el){
+      anime({
+        targets: el,
+        translateY: 0,
+        opacity: 1,
+        duration: 1000,
+        easing: 'easeInOutSine'
+      })
+    },
+
+    beforeEnterHistory(el){
+      el.style.transform = "translateY(200%)"
+      el.style.opacity = 0
+    },
+    enterHistory(el){
+      anime({
+        targets: el,
+        translateY: 0,
+        opacity: 1,
+        duration: 800,
+        easing: 'easeInOutSine'
+      })
     }
   }
 }
@@ -118,6 +205,7 @@ export default {
 .grid-container .item3{
   grid-area: 3/3/4/4;
   position: relative;
+  z-index: 3;
 }
 .grid-container .item3 video{
   width: 100%;
@@ -147,7 +235,7 @@ export default {
     width: 100%;
     padding: 15% 15% 15% 5%;
     color: rgb(248, 247, 247);
-    text-align: justify;
+    text-align: left;
     font-size: 0.8rem;
     position: absolute;
 }
@@ -159,6 +247,7 @@ export default {
 .grid-container .item4{
   grid-area: 3/4/4/5;
   position: relative;
+  z-index: 2;
   background-color: rgb(116, 10, 10);
   background-image: url('../assets/cocacola-cans/diet-coke.png');
   background-repeat: no-repeat;
