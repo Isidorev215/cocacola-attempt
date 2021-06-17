@@ -83,7 +83,7 @@ export default {
         targets: el,
         translateY: 0,
         opacity: 1,
-        duration: 1000,
+        duration: 1500,
         easing: 'easeInOutSine'
       })
     },
@@ -97,7 +97,7 @@ export default {
         targets: el,
         translateY: 0,
         opacity: 1,
-        duration: 1500,
+        duration: 2000,
         easing: 'easeInOutSine'
       })
     },
@@ -111,7 +111,7 @@ export default {
         targets: el,
         translateY: 0,
         opacity: 1,
-        duration: 1000,
+        duration: 1500,
         easing: 'easeInOutSine'
       })
     },
@@ -125,7 +125,7 @@ export default {
         targets: el,
         translateY: 0,
         opacity: 1,
-        duration: 1000,
+        duration: 1200,
         easing: 'easeInOutSine'
       })
     },
@@ -139,7 +139,7 @@ export default {
         targets: el,
         translateY: 0,
         opacity: 1,
-        duration: 800,
+        duration: 500,
         easing: 'easeInOutSine'
       })
     }

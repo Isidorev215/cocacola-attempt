@@ -23,7 +23,11 @@
     </transition>
     
   </nav>
-  <router-view/>
+
+    <transition :name="$route.meta.transition" mode='out-in'>
+      <router-view />
+    </transition>
+
 </template>
 
 
@@ -120,5 +124,13 @@
 }
 .purchaseBtnAnime-enter-active{
   transition: all 1.3s ease;
+}
+
+/* route transition - homeslide route*/
+.homeslide-leave-to{
+  transform: translateY(200%);
+}
+.homeslide-leave-active{
+  transition: all 1.5s ease-out;
 }
 </style>
