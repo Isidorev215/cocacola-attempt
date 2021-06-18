@@ -10,9 +10,9 @@
     <transition name="navLinksAnime" appear>
       <ul class="nav-item nav-links">
         <li><router-link :to="{ name: 'Products'}">PRODUCTS</router-link></li>
-        <li><router-link :to="{ name: 'Whatsnew'}">WHAT'S NEW</router-link></li>
-        <li><router-link :to="{ name: 'Newsletter'}">NEWSLETTER</router-link></li>
-        <li><router-link :to="{ name: 'Contactus'}">CONTACT US</router-link></li>
+        <li><a>WHAT'S NEW</a></li>
+        <li><a>NEWSLETTER</a></li>
+        <li><a>CONTACT US</a></li>
       </ul>
     </transition>
     
@@ -24,9 +24,14 @@
     
   </nav>
 
-    <transition :name="$route.meta.transition" mode='out-in'>
+    <!-- <transition :name="$route.meta.transition" mode='out-in'>
       <router-view />
-    </transition>
+    </transition> -->
+    <router-view v-slot="{ Component, route }">
+      <transition :name="route.meta.transition" mode="out-in">
+        <component :is="Component"></component>
+      </transition>
+    </router-view>
 
 </template>
 
@@ -127,10 +132,17 @@
 }
 
 /* route transition - homeslide route*/
+/* WAHALA OH!! The transforms are working in an opposite and weird manner */
 .homeslide-leave-to{
   transform: translateY(200%);
 }
 .homeslide-leave-active{
-  transition: all 1.5s ease-out;
+  transition: all 2s ease-out;
+}
+.productslide-leave-to{
+  transform: translateY(100%);
+}
+.productslide-leave-active{
+  transition: all 0.5s ease-out;
 }
 </style>
