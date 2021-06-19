@@ -1,51 +1,44 @@
 <template>
   <main id="landing-page">
     <transition appear @before-enter="beforeEnterImg" @enter="enterImg">
-      <img src="../assets/cocacola-cans/classic-coke-two.png" alt="Classic Cocacola can">
+      <img class="center-coke-img" src="../assets/cocacola-cans/classic-coke-two.png" alt="Classic Cocacola can">
     </transition>
 
-    <section class="main-section grid-container">
+    <transition-group tag="section" class="main-section grid-container" appear 
+      @before-enter="beforeEnter" @enter="enter">
 
-      <transition appear @before-enter="beforeEnterArticle" @enter="enterArticle">
-          <article class="item1 grid-children" key="1">
-            <h1>Things go better with Coke.</h1>
-            <h6>All your favourite flavour. The gang all here compare flavours, get numerous faces and check out ingredients</h6>
-            <button class="to-product-route" @click="toProducts">VIEW PRODUCT</button>
-          </article>
-      </transition>
+      <article class="item1 grid-children" key="1">
+        <h1>Things go better with Coke.</h1>
+        <h6>All your favourite flavour. The gang all here compare flavours, get numerous faces and check out ingredients</h6>
+        <button class="to-product-route" @click="toProducts">VIEW PRODUCT</button>
+      </article>
 
-      <transition appear @before-enter="beforeEnterCarousel" @enter="enterCarousel">
-          <aside class="item2 grid-children" key="2">
-            <Textcarousel/>
-          </aside>
-      </transition>
+      <aside class="item2 grid-children" key="2">
+        <Textcarousel/>
+      </aside>
+      
+      <div class="item3 grid-children" key="3">
+        <video ref="vid" autoplay loop>
+          <source src="../assets/a-glass-of-fizzy-coke.mp4" type="video/mp4">
+        </video>
+        <button @click="toggleplay">
+          <span v-if="isPlaying" class="material-icons">pause</span>
+          <span v-else class="material-icons">play_arrow</span>
+        </button>
+        <div class="inner-text">
+          <h4>COKE ZERO</h4>
+          <p>Loremi ipsum dolor sit amet consectetur adipisicing eliti. Aspernatur autem similique qui recusandae doloremque perferendis!</p>
+        </div>
+      </div>
+      
+      <div class="item4 grid-children" key="4">
+        <div class="inner-text">
+          <h4>COKE HISTORY</h4>
+          <p>Loremi ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem similique qui recusandae doloremque perferendis!</p>
+        </div>
+      </div>
 
-      <transition appear @before-enter="beforeEnterVideo" @enter="enterVideo">
-          <div class="item3 grid-children" key="3">
-            <video ref="vid" autoplay loop>
-              <source src="../assets/a-glass-of-fizzy-coke.mp4" type="video/mp4">
-            </video>
-            <button @click="toggleplay">
-              <span v-if="isPlaying" class="material-icons">pause</span>
-              <span v-else class="material-icons">play_arrow</span>
-            </button>
-            <div class="inner-text">
-              <h4>COKE ZERO</h4>
-              <p>Loremi ipsum dolor sit amet consectetur adipisicing eliti. Aspernatur autem similique qui recusandae doloremque perferendis!</p>
-            </div>
-          </div>
-      </transition>
-
-      <transition appear @before-enter="beforeEnterHistory" @enter="enterHistory">
-          <div class="item4 grid-children" key="4">
-            <div class="inner-text">
-              <h4>COKE HISTORY</h4>
-              <p>Loremi ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem similique qui recusandae doloremque perferendis!</p>
-            </div>
-          </div>
-      </transition>
-
-    </section>
+    </transition-group>
   </main>
 </template>
 
@@ -75,7 +68,7 @@ export default {
     },
     
     beforeEnterImg(el){
-      el.style.transform = "translateY(200%)"
+      el.style.transform = "translateY(100%)"
       el.style.opacity = 0
     },
     enterImg(el){
@@ -84,65 +77,45 @@ export default {
         translateY: 0,
         opacity: 1,
         duration: 1000,
+        delay: 500,
         easing: 'easeInOutSine'
       })
     },
 
-    beforeEnterArticle(el){
-      el.style.transform = "translateY(200%)"
+    beforeEnter(el){
+      el.style.transform = "translateY(100%)"
       el.style.opacity = 0
     },
-    enterArticle(el){
+    enter(el){
       anime({
-        targets: el,
-        translateY: 0,
-        opacity: 1,
-        duration: 1200,
-        easing: 'easeInOutSine'
-      })
-    },
-
-    beforeEnterCarousel(el){
-      el.style.transform = "translateY(200%)"
-      el.style.opacity = 0
-    },
-    enterCarousel(el){
-      anime({
-        targets: el,
+        targets: '.grid-children',
         translateY: 0,
         opacity: 1,
         duration: 1000,
+        delay: anime.stagger(300, {start: 50, direction: 'reverse'}),
         easing: 'easeInOutSine'
       })
     },
-
-    beforeEnterVideo(el){
-      el.style.transform = "translateY(200%)"
-      el.style.opacity = 0
-    },
-    enterVideo(el){
-      anime({
-        targets: el,
-        translateY: 0,
-        opacity: 1,
-        duration: 500,
-        easing: 'easeInOutSine'
-      })
-    },
-
-    beforeEnterHistory(el){
-      el.style.transform = "translateY(200%)"
-      el.style.opacity = 0
-    },
-    enterHistory(el){
-      anime({
-        targets: el,
-        translateY: 0,
-        opacity: 1,
-        duration: 300,
-        easing: 'easeInOutSine'
-      })
-    }
+  },
+  beforeRouteLeave(to, from, next){
+    anime({
+      targets: ".center-coke-img",
+      duration: 1000,
+      translateY: 100,
+      delay: 600,
+      easing: 'easeInOutSine'
+    })
+    anime({
+      targets: ".grid-children",
+      duration: 1000,
+      translateY: 200,
+      delay: anime.stagger(300, {start: 50, direction: "reverse", easing: 'easeOutSine'}),
+      easing: 'easeInOutSine'
+    })
+    console.log("this")
+    setTimeout(() => {
+      next()
+    }, 2000)
   }
 }
 </script>

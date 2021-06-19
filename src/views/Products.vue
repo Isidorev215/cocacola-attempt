@@ -1,10 +1,12 @@
 <template>
   <div class="products-container">
-    <transition-group class="flex-container" tag="ul" appear @before-enter="beforeEnterCans" @enter="enterCans">
-      <li class="dynamic-flex-children" v-for="cokeImage in cokeImages" :key="cokeImage.id">
-        <img :src="cokeImage.src" :alt="cokeImage.title" class="can-image">
-        <p>{{cokeImage.title}}</p>
-      </li>
+    <transition-group class="flex-container" tag="ul" appear 
+      @before-enter="beforeEnter" 
+      @enter="enter">
+        <li class="dynamic-flex-children" v-for="cokeImage in cokeImages" :key="cokeImage.id">
+          <img :src="cokeImage.src" :alt="cokeImage.title" class="can-image">
+          <p>{{cokeImage.title}}</p>
+        </li>
     </transition-group>
   </div>
 </template>
@@ -28,19 +30,33 @@ export default {
     }
   },
   methods: {
-    beforeEnterCans(el){
+    beforeEnter(el){
       el.style.transform = "translateX(-100%)"
       el.style.opacity = 0
     },
-    enterCans(el){
+    enter(el){
       anime({
-        targets: el,
+        targets: ".dynamic-flex-children",
+        duration: 700,
         opacity: 1,
         translateX: 0,
-        delay: anime.stagger(200, {start: 100}),
+        delay: anime.stagger(100, {start: 100, direction: "reverse"}),
         easing: 'easeInOutSine'
       })
     }
+  },
+  beforeRouteLeave(to, from, next){
+    anime({
+      targets: ".dynamic-flex-children",
+      duration: 1000,
+      translateY: 1000,
+      delay: anime.stagger(200, {start: 100, direction: "reverse", easing: 'easeOutQuad'}),
+      easing: 'easeInOutSine'
+    })
+    console.log("this")
+    setTimeout(() => {
+      next()
+    }, 2050)
   }
 
 }

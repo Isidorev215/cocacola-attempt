@@ -24,14 +24,13 @@
     
   </nav>
 
-    <!-- <transition :name="$route.meta.transition" mode='out-in'>
-      <router-view />
-    </transition> -->
-    <router-view v-slot="{ Component, route }">
-      <transition :name="route.meta.transition" mode="out-in">
-        <component :is="Component"></component>
-      </transition>
-    </router-view>
+  <!-- <router-view /> -->
+
+  <router-view v-slot="{ Component, route }">
+    <transition :name="route.meta.transition" mode="out-in">
+      <component :is="Component"></component>
+    </transition>
+  </router-view>
 
 </template>
 
@@ -132,17 +131,16 @@
 }
 
 /* route transition - homeslide route*/
-/* WAHALA OH!! The transforms are working in an opposite and weird manner */
 .homeslide-leave-to{
-  transform: translateY(200%);
+  transform: translateY(100%);
 }
 .homeslide-leave-active{
-  transition: all 2s ease-out;
+  transition: all 0.1s ease-out;
 }
 .productslide-leave-to{
   transform: translateY(100%);
 }
 .productslide-leave-active{
-  transition: all 0.5s ease-out;
+  transition: all 0.1s ease-out;
 }
 </style>
