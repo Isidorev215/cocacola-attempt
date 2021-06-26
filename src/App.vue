@@ -24,13 +24,13 @@
     
   </nav>
 
-  <!-- <router-view /> -->
+  <router-view :key="$route.path" />
 
-  <router-view v-slot="{ Component, route }">
+  <!-- <router-view v-slot="{ Component, route }">
     <transition :name="route.meta.transition" mode="out-in">
       <component :is="Component"></component>
     </transition>
-  </router-view>
+  </router-view> -->
 
 </template>
 
@@ -130,8 +130,8 @@
   transition: all 1.3s ease;
 }
 
-/* route transition - homeslide route*/
-.homeslide-leave-to{
+/* route transition - homeslide and productSlide*/
+/* .homeslide-leave-to{
   transform: translateY(100%);
 }
 .homeslide-leave-active{
@@ -142,5 +142,5 @@
 }
 .productslide-leave-active{
   transition: all 0.1s ease-out;
-}
+} */
 </style>

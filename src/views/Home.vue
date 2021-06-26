@@ -1,7 +1,7 @@
 <template>
   <main id="landing-page">
     <transition appear @before-enter="beforeEnterImg" @enter="enterImg">
-      <img class="center-coke-img" src="../assets/cocacola-cans/classic-coke-two.png" alt="Classic Cocacola can">
+      <img class="center-coke-img" src="../assets/cocacola-cans/cocacola-classic.png" alt="Classic Cocacola can">
     </transition>
 
     <transition-group tag="section" class="main-section grid-container" appear 
@@ -112,7 +112,6 @@ export default {
       delay: anime.stagger(300, {start: 50, direction: "reverse", easing: 'easeOutSine'}),
       easing: 'easeInOutSine'
     })
-    console.log("this")
     setTimeout(() => {
       next()
     }, 2000)
@@ -142,21 +141,21 @@ export default {
   grid-gap: 0;
 }
 
-.grid-container .item1{
+#landing-page .grid-container .item1{
   grid-area: 1/1/3/2;
   padding: 0 15% 0;
   text-align: left;
 }
-.grid-container .item1 h1{
+#landing-page .grid-container .item1 h1{
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
-.grid-container .item1 h6{
+#landing-page .grid-container .item1 h6{
   font-size: 0.8rem;
   font-weight: normal;
   margin-bottom: 30px;
 }
-.grid-container .item1 button{
+#landing-page .grid-container .item1 button{
   background: none;
   padding: 15px 30px;
   color: white;
@@ -164,23 +163,23 @@ export default {
   border-radius: 25px;
   cursor: pointer;
 }
-.grid-container .item1 button:hover{
+#landing-page .grid-container .item1 button:hover{
   background-color: rgb(116, 10, 10);
 }
 
 /* the carousel grid */
-.grid-container .item2{
+#landing-page .grid-container .item2{
   grid-area: 3/1/4/3;
   position: relative;
 }
 
 /* the video grid */
-.grid-container .item3{
+#landing-page .grid-container .item3{
   grid-area: 3/3/4/4;
   position: relative;
   z-index: 3;
 }
-.grid-container .item3 video{
+#landing-page .grid-container .item3 video{
   width: 100%;
   height: 100%;
   position: absolute;
@@ -188,7 +187,7 @@ export default {
   left: 0;
   background-color: black;
 }
-.grid-container .item3 button{
+#landing-page .grid-container .item3 button{
   position: absolute;
   top: -18px;
   right: -18px;
@@ -203,7 +202,7 @@ export default {
   align-items: center;
 }
 /* this is for the inner-text for both grid item3 and item4  */
-.grid-container .inner-text{
+#landing-page .grid-container .inner-text{
     height: 100%;
     width: 100%;
     padding: 15% 15% 15% 5%;
@@ -212,12 +211,12 @@ export default {
     font-size: 0.8rem;
     position: absolute;
 }
-.grid-container .inner-text h4{
+#landing-page .grid-container .inner-text h4{
   margin-bottom: 10px;
 }
 
 /* the last grid */
-.grid-container .item4{
+#landing-page .grid-container .item4{
   grid-area: 3/4/4/5;
   position: relative;
   z-index: 2;

@@ -1,0 +1,117 @@
+{
+    "cokeImages": [
+            { 
+                "title": "Cocacola Life", 
+                "description": "Lorem ipsum no sicut anon in aquila no ager. In homines ad majorem tempus avis, et cum in pecunia imoten tua",
+                "src": "../assets/cocacola-cans/cocacola-life.png", 
+                "id": 1, 
+                "name": "cocacola-life",
+                "nutrition": [
+                    { "title": "sodium", "value": "150 cl", "percent": "25%" },
+                    { "title": "Total Fats", "value": "0g", "percent" : "0%" },
+                    { "title": "sodium (mg)", "value": "40mg", "percent": "0%"},
+                    { "title": "potasium", "value": "4g", "percent": "0%" },
+                    { "title": "calcium", "value": "0g", "percent": "0%"}
+                ]
+            },
+            { 
+                "title": "Cocacola Zero", 
+                "description": "Lorem ipsum no sicut anon in aquila no ager. In homines ad majorem tempus avis, et cum in pecunia imoten tua",
+                "src": "../assets/cocacola-cans/cocacola-zero.png", 
+                "id": 2, 
+                "name": "cocacola-zero",
+                "nutrition": [
+                    { "title": "sodium (vol)", "value": "150 cl", "percent": "25%" },
+                    { "title": "Total Fats", "value": "0g", "percent" : "0%" },
+                    { "title": "sodium (mg)", "value": "2g", "percent":" 0%"},
+                    { "title": "potasium", "value": "4g", "percent": "0%" },
+                    { "title": "calcium", "value": "0g", "percent": "0%"}
+                ]
+            },
+            { 
+                "title": "Diet Coke", 
+                "description": "Lorem ipsum no sicut anon in aquila no ager. In homines ad majorem tempus avis, et cum in pecunia imoten tua",
+                "src": "../assets/cocacola-cans/diet-coke.png",
+                "id": 3, 
+                "name": "diet-coke",
+                "nutrition": [
+                    { "title": "sodium (vol)", "value": "150 cl", "percent": "25%" },
+                    { "title": "Total Fats", "value": "0g", "percent" : "0%" },
+                    { "title": "sodium (mg)", "value":" 1mg", "percent": "0.2%"},
+                    { "title": "potasium", "value": "8g", "percent": "0%"  },
+                    { "title": "calcium", "value": "0g", "percent": "0%"}
+                ] 
+            },
+            { 
+                "title": "Cocacola Classic", 
+                "description": "Lorem ipsum no sicut anon in aquila no ager. In homines ad majorem tempus avis, et cum in pecunia imoten tua",
+                "src": "../assets/cocacola-cans/cocacola-classic.png",
+                "id": 4, 
+                "name": "cocacola-classic",
+                "nutrition": [
+                    { "title": "sodium (vol)", "value": "150 cl", "percent": "25%" },
+                    { "title": "Total Fats", "value": "0g", "percent" : "0%" },
+                    { "title": "sodium (mg)", "value": "40mg", "percent": "0.2%"},
+                    { "title": "potasium", "value": "6g", "percent": "0%" },
+                    { "title": "calcium", "value": "0g", "percent": "0%"}
+                ] 
+            },
+            { 
+                "title": "New Cocacola", 
+                "description": "Lorem ipsum no sicut anon in aquila no ager. In homines ad majorem tempus avis, et cum in pecunia imoten tua",
+                "src": "../assets/cocacola-cans/new-cocacola.png",
+                "id": 5, 
+                "name": "new-cocacola",
+                "nutrition": [
+                    { "title": "sodium (vol)", "value": "150 cl", "percent": "25%" },
+                    { "title": "Total Fats", "value": "0g", "percent" : "0%" },
+                    { "title": "sodium (mg)", "value": "40mg", "percent": "0.2%"},
+                    { "title": "potasium", "value": "1g", "percent": "0%" },
+                    { "title": "calcium", "value": "0g", "percent": "0%"}
+                ] 
+            },
+            { 
+                "title": "Vanilla",
+                "description": "Lorem ipsum no sicut anon in aquila no ager. In homines ad majorem tempus avis, et cum in pecunia imoten tua",
+                "src": "../assets/cocacola-cans/cocacola-vanilla.png", 
+                "id": 6, 
+                "name": "cocacola-vanilla",
+                "nutrition": [
+                    { "title": "sodium (vol)", "value": "150 cl", "percent": "25%" },
+                    { "title": "Total Fats", "value": "0g", "percent" : "0%" },
+                    { "title": "sodium (mg)", "value": "40mg", "percent": "0.2%"},
+                    { "title": "potasium", "value": "3g", "percent": "0%" },
+                    { "title": "calcium", "value": "0g", "percent": "0%"}
+                ] 
+            },
+            { 
+                "title": "Cocacola Light", 
+                "description": "Lorem ipsum no sicut anon in aquila no ager. In homines ad majorem tempus avis, et cum in pecunia imoten tua",
+                "src": "../assets/cocacola-cans/cocacola-light.png", 
+                "id": 7, 
+                "name": "cocacola-light",
+                "nutrition": [
+                    { "title": "sodium (vol)", "value": "150 cl", "percent": "25%" },
+                    { "title": "Total Fats", "value": "0g", "percent" : "0%" },
+                    { "title": "sodium (mg)", "value": "40mg", "percent": "0.2%"},
+                    { "title": "potasium", "value": "1g", "percent": "0%"  },
+                    { "title": "calcium", "value": "0g", "percent": "0%"}
+                ] 
+            },
+            { 
+                "title": "Cocacola Cherry", 
+                "description": "Lorem ipsum no sicut anon in aquila no ager. In homines ad majorem tempus avis, et cum in pecunia imoten tua",
+                "src": "../assets/cocacola-cans/cocacola-cherry.png", 
+                "id": 8, 
+                "name": "cocacola-cherry",
+                "nutrition": [
+                    { "title": "sodium (vol)", "value": "150 cl", "percent": "25%" },
+                    { "title": "Total Fats", "value": "0g", "percent" : "0%" },
+                    { "title": "sodium (mg)", "value": "40mg", "percent": "0.2%"},
+                    { "title": "potasium", "value": "5g", "percent": "0%" },
+                    { "title": "calcium", "value": "0g", "percent": "0%"}
+                ] 
+            }
+    ]
+    
+}

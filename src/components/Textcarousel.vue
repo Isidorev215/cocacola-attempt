@@ -19,7 +19,7 @@ export default {
                 {title: 'ARE YOU OUT OF STYLE?', paragraph: 'Loremi ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem similique qui recusandae doloremque perferendis!', id: 2},
                 {title: 'WHERE IS A STYLE', paragraph: 'Loremi ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem similique qui recusandae doloremque perferendis!', id: 3},
                 {title: 'WHO IS A STYLE', paragraph: 'Loremi ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem similique qui recusandae doloremque perferendis!', id: 4},
-                {title: 'WHY GO OUT OF STYLE', paragraph: 'Loremi ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem similique qui recusandae doloremque perferendis!', id: 5},
+                {title: 'WHY IS A STYLE', paragraph: 'Loremi ipsum dolor sit amet consectetur adipisicing elit. Aspernatur autem similique qui recusandae doloremque perferendis!', id: 5},
             ],
             visibleSlide: 0,
             direction: ''

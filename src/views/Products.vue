@@ -4,8 +4,11 @@
       @before-enter="beforeEnter" 
       @enter="enter">
         <li class="dynamic-flex-children" v-for="cokeImage in cokeImages" :key="cokeImage.id">
-          <img :src="cokeImage.src" :alt="cokeImage.title" class="can-image">
+            <router-link class="hover-on-me" :to="{ name: 'Showcase', params: { name: cokeImage.name }}">
+              <img :src="cokeImage.src" :alt="cokeImage.title" class="can-image">
+            </router-link>
           <p>{{cokeImage.title}}</p>
+          <img :src="cokeImage.src" :alt="`${cokeImage.title} small size`" class="can-small-size">
         </li>
     </transition-group>
   </div>
@@ -17,18 +20,31 @@ export default {
   name: 'Products',
   data(){
     return {
-      cokeImages: [
-        { title: 'Cocacola Life', src: require('@/assets/cocacola-cans/cocacola-life.png'), id: 1 },
-        { title: 'Cocacola Zero', src: require('@/assets/cocacola-cans/cocacola-zero.png'), id: 2 },
-        { title: 'Diet Coke', src: require('@/assets/cocacola-cans/diet-coke.png'), id: 3 },
-        { title: 'Cocacola Classic', src: require('@/assets/cocacola-cans/classic-coke-two.png'), id: 4 },
-        { title: 'New Cocacola', src: require('@/assets/cocacola-cans/classic-cocacola.png'), id: 5 },
-        { title: 'Vanilla', src: require('@/assets/cocacola-cans/cocacola-vanilla.png'), id: 6 },
-        { title: 'Cocacola Light', src: require('@/assets/cocacola-cans/cocacola-light.png'), id: 7 },
-        { title: 'Cocacola Cherry', src: require('@/assets/cocacola-cans/cocacola-cherry.png'), id: 8 }
-      ]
+      cokeImages: []
     }
   },
+  mounted(){
+    fetch("http://localhost:3000/cokeImages")
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      const requireModified = data.map(cokeImage => {
+        return {...cokeImage, src: require(`../assets/cocacola-cans/${cokeImage.name}.png`)}
+      })
+      this.cokeImages = requireModified
+      // console.log(modifiedArray)
+      // console.log(this.cokeImages)
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+  },
+  // computed: {
+  //   stringCokeImages(){
+  //     return JSON.stringify(this.cokeImages)
+  //   }
+  // },
+
   methods: {
     beforeEnter(el){
       el.style.transform = "translateX(-100%)"
@@ -45,6 +61,7 @@ export default {
       })
     }
   },
+
   beforeRouteLeave(to, from, next){
     anime({
       targets: ".dynamic-flex-children",
@@ -53,7 +70,6 @@ export default {
       delay: anime.stagger(200, {start: 100, direction: "reverse", easing: 'easeOutQuad'}),
       easing: 'easeInOutSine'
     })
-    console.log("this")
     setTimeout(() => {
       next()
     }, 2050)
@@ -68,7 +84,7 @@ export default {
   width: 100vw;
   overflow-y: hidden;
 }
-.flex-container{
+.products-container .flex-container{
   height: 100%;
   width: 100%;
   display: flex;
@@ -76,15 +92,31 @@ export default {
   align-items: center;
   padding: 5% 10%;
 }
-.dynamic-flex-children{
+.products-container .dynamic-flex-children{
   list-style-type: none;
   flex-basis: 25%;
+  position: relative;
 }
-.dynamic-flex-children img{
-  width: 40%;
+.products-container .dynamic-flex-children .can-image{
+  width: 50%;
+  cursor: pointer;
 }
-.dynamic-flex-children p{
-  font-size: 0.7rem;
+.products-container .dynamic-flex-children p{
+  font-size: 0.8rem;
 }
+.products-container .dynamic-flex-children .can-small-size{
+  position: absolute;
+  width: 30%;
+  left: 50%;
+  margin-left: -15%;
+  top: 50%;
+  margin-top: -20%;
+  z-index: -1;
+  transition: transform 0.5s ease-in-out;
+}
+.products-container .can-image:hover ~ .can-small-size, .hover-on-me:hover ~ .can-small-size{
+  transform: translate(80px, -30px);
+}
+
 
 </style>
