@@ -1,7 +1,7 @@
 # cocacola-attempt
 This is a personal project. A self-administred test of sorts.<br>
 The goal is to reproduce a **cocacola based UI/UX design moockup** I found sometime ago.<br>
-[![Watch the video](https://drive.google.com/file/d/17AawdXAdUtquKTC2JLOkPp84neWfG9vt/view?usp=sharing)](https://youtu.be/vt5fpE0bzSY)
+[![Watch the video](https://drive.google.com/file/d/17AawdXAdUtquKTC2JLOkPp84neWfG9vt/view?usp=sharing)](https://no-link-yet)
 
 
 ## Technologies used
