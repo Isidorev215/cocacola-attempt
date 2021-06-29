@@ -14,8 +14,8 @@ These are the technologies I have used so far to build this app.
 3. json-server to serve up a local json file
 
 ## Subsequent (future) additon
-1. Vue-meta to make it more SEO-frinedly
-2. Prerender-spa-plugin
+1. Vue-meta for SEO
+2. Prerender-spa-plugin for SEO
 3. Firebase firestore as the database instead of json-server
-4. Firebase storage for image storage
+4. Firebase storage for images storage
 5. Firebase Hosting
