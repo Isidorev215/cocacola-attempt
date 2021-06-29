@@ -1,7 +1,7 @@
 # cocacola-attempt
 This is a personal project. A self-administred test of sorts.<br>
-The goal is to reproduce a **cocacola based UI/UX design moockup** I found sometime ago.<br>
-[![Watch the video](https://drive.google.com/file/d/17AawdXAdUtquKTC2JLOkPp84neWfG9vt/view?usp=sharing "A google drive link")](https://no-link-yet)<br>
+The goal is to reproduce a **cocacola based UI/UX design moockup** I found sometime ago.<br><br>
+[<img src="./src/assets/cocacola-attempt-poster-readme.jpg" width="300" alt="watch the video" title="A google drive link">](https://drive.google.com/file/d/1S4czvcU9trv1kTudwhuSrQxUU5hw7qY8/view?usp=sharing)<br>
 *click to watch video*
 
 
