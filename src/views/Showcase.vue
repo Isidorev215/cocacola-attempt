@@ -1,12 +1,14 @@
 <template>
-  <!-- <svg id="morph" height="100%" width="100%" viewBox="0 0 496 500" preserveAspectRatio="none">
-    <path class="morph" 
-      d="M 0 0 L 0 344.976 C 47.256 438.867 23.723 224.754 81.771 311.754 C 142.172 509.34 131.041 331.322 133.73 373.935 C 136.419 416.548 117.617 238.665 201.022 321.125 C 232.412 325.033 241.172 164.777 264.054 228.279 C 308.144 589.171 347.64 392.28 348.381 345.826 C 358.676 299.444 357.38 170.011 409.711 336.456 C 440.33 433.845 505.405 490.347 496.593 335.605 L 500.852 0 L 0 0" 
-      fill="#002E3A">
-    </path>
-  </svg> -->
+  <transition appear @before-enter="beforeEnterSvg" @enter="enterSvg" v-if="routeObj.name">
+    <svg id="morph" height="100%" width="100%" viewBox="0 0 498 500" preserveAspectRatio="none">
+      <path class="morph" 
+        d="" 
+        fill="rgb(31, 30, 30)">
+      </path>
+    </svg>
+  </transition>
 
-  <div class="showcase-container">
+  <div class="showcase-container" v-if="routeObj.name">
 
     <main class="left flex-child">
       <h1>{{routeObj.title}}</h1>
@@ -50,13 +52,19 @@
 </template>
 
 <script>
+import anime from 'animejs/lib/anime.es.js';
 export default {
     props: [ "name" ],
     data(){
       return {
         cokeImagesArray: [],
         routeObj: {},
-        trackActiveRoute: true
+        previousBodyBg: '',
+        green: "rgb(86, 126, 68)",
+        purple: "#86606e",
+        black: "rgb(31, 30, 30)",
+        red: "rgb(116, 10, 10)"
+        
       }
     },
     mounted(){
@@ -77,12 +85,89 @@ export default {
       .catch(err => {
         console.log(err.message)
       })
+    },
+    methods: {
+      beforeEnterSvg(el){
+        const body = document.getElementById('body');
+
+        const path = el.querySelector('.morph');
+        path.setAttribute('d', 'M -119.25 1.798 L -127.769 512.02 C -86.868 517.633 2.159 514.003 15.332 514.575 C 44.366 516.935 94.383 517.954 137.137 517.13 C 165.707 516.579 244.645 508.118 266.611 512.871 C 293.07 518.596 373.162 516.645 387.563 514.574 C 402.738 518.014 492.465 510.416 504.26 511.167 L 501.704 -3.313 L -120.953 -3.312')
+
+        if(this.$route.params.name == 'cocacola-life'){
+          body.style.backgroundColor = this.green
+        }
+        else if(this.$route.params.name == 'cocacola-cherry'){
+          body.style.backgroundColor = this.purple
+        }
+        else if(this.$route.params.name == 'cocacola-zero' || this.$route.params.name == 'diet-coke' || this.$route.params.name == 'cocacola-light'){
+          body.style.backgroundColor = this.black
+          path.setAttribute('fill', this.red)
+        }
+        else{
+          body.style.backgroundColor = this.red
+        }
+      },
+      enterSvg(el){
+        var morphing = anime({
+          targets: '.morph',
+          d: [
+            { value: "M -116.695 0.946 L -114.991 171.304 C -122.468 316.822 -41.581 314.329 6.814 213.042 C 62.415 82.307 131.907 163.382 143.952 252.224 C 186.151 497.84 274.907 330.71 289.609 187.488 C 328.24 -93.388 393.973 39.85 414.821 251.372 C 450.439 415.8 495.871 271.915 499.148 169.6 L 501.704 0.946 L -116.695 0.947"},
+            { value: "M -114.139 0.946 L -44.294 1.799 C -36.613 -0.254 37.934 1.226 51.107 1.798 C 63.105 2.454 121.64 1.77 164.394 0.946 C 192.964 0.395 267.987 2.029 290.46 1.797 C 313.512 1.559 391.901 1.313 407.154 2.649 C 421.477 3.534 485.651 1.046 497.446 1.797 L 498.297 1.798 C 530.358 0.239 -96.83 4.057 -114.139 1.799"}
+          ],
+          easing: 'linear',
+          duration: 1000
+        })
+      }
+    },
+    beforeRouteUpdate(to, from, next){
+      const body = document.getElementById('body');
+      const path = document.querySelector('.morph');
+      
+      const arrayfromProxy = JSON.parse(JSON.stringify(this.cokeImagesArray))
+      const obj = arrayfromProxy.find(obj => {
+        return obj.name == to.params.name
+      })
+      this.routeObj = obj
+
+      // the if checks for routing
+      if(to.params.name == 'cocacola-life'){
+        body.style.backgroundColor = this.green
+      }
+      else if(to.params.name == 'cocacola-cherry'){
+        body.style.backgroundColor = this.purple
+      }
+      else if(to.params.name == 'cocacola-zero' || this.$route.params.name == 'diet-coke' || this.$route.params.name == 'cocacola-light'){
+        body.style.backgroundColor = this.black
+        path.setAttribute('fill', this.red)
+      }
+      else{
+        body.style.backgroundColor = this.red
+      }
+      
+      next()
+    },
+    beforeRouteLeave(to, from, next){
+      const body = document.getElementById('body');
+      const path = document.querySelector('.morph')
+      body.style.backgroundColor = this.black
+      next()
     }
 
 }
 </script>
 
 <style>
+/* the svg itself */
+#morph{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* the showcase body */
 .showcase-container{
   height: 90vh;
   width: 100vw;
@@ -159,7 +244,7 @@ export default {
   width: 10%;
   position: absolute;
   z-index: -1;
-  right: -8px;
+  right: -5px;
 }
 #nutritional-facts ul li:last-child p:last-child::after{
   right: 0;
@@ -179,6 +264,7 @@ export default {
   position: absolute;
   bottom: 0;
   right: 0;
+  z-index: 2;
   padding: 2% 1% 2% 2%;
   text-align: left;
 }
@@ -204,6 +290,7 @@ export default {
   position: absolute;
   right: 5%;
   top: 30%;
+  z-index: 2;
   height: 35%;
   width: 1%;
   list-style-type: none;

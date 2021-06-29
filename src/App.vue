@@ -24,7 +24,8 @@
     
   </nav>
 
-  <router-view :key="$route.path" />
+  <!-- <router-view :key="$route.path" /> -->
+  <router-view />
 
   <!-- <router-view v-slot="{ Component, route }">
     <transition :name="route.meta.transition" mode="out-in">

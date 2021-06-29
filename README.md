@@ -1,19 +1,19 @@
 # cocacola-attempt
+This is a personal project. A self-administred test of sorts.<br>
+The goal is to reproduce a **cocacola based UI/UX design moockup** I found sometime ago.<br>
+[![Watch the video](https://drive.google.com/file/d/17AawdXAdUtquKTC2JLOkPp84neWfG9vt/view?usp=sharing)](https://youtu.be/vt5fpE0bzSY)
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Technologies used
+These are the technologies I have used so far to build this app.
+1. Vue.js (version 3)
+    * vue-router and its guards
+    * vue transitions
+2. anime.js
+3. json-server to serve up a local json file
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Subsequent additon
+1. Vue-meta to make it more SEO-frinedly
+2. Prerender-spa-plugin
+3. Firebase firestore as the database instead of json-server
+4. Firebase Hosting

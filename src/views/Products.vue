@@ -1,6 +1,6 @@
 <template>
   <div class="products-container">
-    <transition-group class="flex-container" tag="ul" appear 
+    <transition-group class="flex-container" tag="ul" appear v-if="cokeImages.length"
       @before-enter="beforeEnter" 
       @enter="enter">
         <li class="dynamic-flex-children" v-for="cokeImage in cokeImages" :key="cokeImage.id">
@@ -27,7 +27,7 @@ export default {
     fetch("http://localhost:3000/cokeImages")
     .then(res => res.json())
     .then(data => {
-      console.log(data)
+      // console.log(data)
       const requireModified = data.map(cokeImage => {
         return {...cokeImage, src: require(`../assets/cocacola-cans/${cokeImage.name}.png`)}
       })
