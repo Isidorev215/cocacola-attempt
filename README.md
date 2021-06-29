@@ -13,7 +13,7 @@ These are the technologies I have used so far to build this app.
 2. anime.js
 3. json-server to serve up a local json file
 
-## Subsequent additon
+## Subsequent (future) additon
 1. Vue-meta to make it more SEO-frinedly
 2. Prerender-spa-plugin
 3. Firebase firestore as the database instead of json-server
