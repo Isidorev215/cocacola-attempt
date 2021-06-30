@@ -1,15 +1,11 @@
 <template>
-  <transition appear @before-enter="beforeEnterSvg" @enter="enterSvg" v-if="routeObj.name">
+  <transition appear @before-enter="beforeEnterSvg" @enter="enterSvg" @after-enter="afterEnter" v-if="routeObj.name">
     <svg id="morph" height="100%" width="100%" viewBox="0 0 498 500" preserveAspectRatio="none">
-      <path class="morph" 
-        d="" 
-        fill="rgb(31, 30, 30)">
-      </path>
+      <path class="morph" d="" fill="rgb(31, 30, 30)"></path>
     </svg>
   </transition>
 
   <div class="showcase-container" v-if="routeObj.name">
-
     <main class="left flex-child">
       <h1>{{routeObj.title}}</h1>
       <p>{{routeObj.description}}</p>
@@ -59,7 +55,7 @@ export default {
       return {
         cokeImagesArray: [],
         routeObj: {},
-        previousBodyBg: '',
+        previousBodyBackground: '',
         green: "rgb(86, 126, 68)",
         purple: "#86606e",
         black: "rgb(31, 30, 30)",
@@ -89,6 +85,7 @@ export default {
     methods: {
       beforeEnterSvg(el){
         const body = document.getElementById('body');
+        el.style.zIndex = "1";
 
         const path = el.querySelector('.morph');
         path.setAttribute('d', 'M -119.25 1.798 L -127.769 512.02 C -86.868 517.633 2.159 514.003 15.332 514.575 C 44.366 516.935 94.383 517.954 137.137 517.13 C 165.707 516.579 244.645 508.118 266.611 512.871 C 293.07 518.596 373.162 516.645 387.563 514.574 C 402.738 518.014 492.465 510.416 504.26 511.167 L 501.704 -3.313 L -120.953 -3.312')
@@ -107,7 +104,7 @@ export default {
           body.style.backgroundColor = this.red
         }
       },
-      enterSvg(el){
+      enterSvg(el, done){
         var morphing = anime({
           targets: '.morph',
           d: [
@@ -115,8 +112,29 @@ export default {
             { value: "M -114.139 0.946 L -44.294 1.799 C -36.613 -0.254 37.934 1.226 51.107 1.798 C 63.105 2.454 121.64 1.77 164.394 0.946 C 192.964 0.395 267.987 2.029 290.46 1.797 C 313.512 1.559 391.901 1.313 407.154 2.649 C 421.477 3.534 485.651 1.046 497.446 1.797 L 498.297 1.798 C 530.358 0.239 -96.83 4.057 -114.139 1.799"}
           ],
           easing: 'linear',
-          duration: 1000
+          duration: 1000,
+          complete: function(anim){
+            done()
+          }
         })
+      },
+      afterEnter(el){
+        el.style.zIndex = "-1"
+        const path = el.querySelector('.morph');
+        path.setAttribute('d', "M 500.708 -0.309 L 0.708 -0.309 L 0.708 499.691 L 500.708 499.691 C 500.708 499.691 500.708 455.55 500.708 399.691 C 500.708 329.261 500.708 368.532 500.708 299.691 C 500.708 253.305 500.708 314.507 500.708 199.691 C 500.708 160.042 500.708 150.016 500.708 99.691 C 500.708 28.961 500.708 -0.309 500.708 -0.309 Z")
+
+        if(this.$route.params.name == 'cocacola-life'){
+          path.setAttribute('fill', this.green)
+        }
+        else if(this.$route.params.name == 'cocacola-cherry'){
+          path.setAttribute('fill', this.purple)
+        }
+        else if(this.$route.params.name == 'cocacola-zero' || this.$route.params.name == 'diet-coke' || this.$route.params.name == 'cocacola-light'){
+          path.setAttribute('fill', this.black)
+        }
+        else{
+          path.setAttribute('fill', this.red)
+        }
       }
     },
     beforeRouteUpdate(to, from, next){
@@ -129,19 +147,45 @@ export default {
       })
       this.routeObj = obj
 
+      // trigger anime.js
+      var animation = anime({
+        targets: '.morph',
+          d: [
+            { value: "M 401.725 -0.309 L 0.708 -0.309 L 0.708 499.691 L 200.708 499.691 C 200.708 499.691 422.674 440.291 340.381 399.691 C 277.454 368.646 500.25 382.529 501.725 299.691 C 503.348 208.523 198.328 245.22 301.725 199.691 C 389.039 161.244 101.725 191.242 101.725 99.691 C 101.725 -0.309 401.766 126.817 401.725 -0.309 Z"},
+            { value: "M 1.725 -0.309 L 0.708 -0.309 L 0.708 499.691 L 1.725 499.691 C 1.725 499.691 0.024 491.439 1.725 399.691 C 2.885 337.111 0.25 382.529 1.725 299.691 C 3.348 208.523 1.725 251.324 1.725 199.691 C 1.725 104.287 1.725 191.242 1.725 99.691 C 1.725 -0.309 1.766 126.817 1.725 -0.309 Z"}
+          ],
+          easing: 'linear',
+          duration: 1000
+      })
+
       // the if checks for routing
       if(to.params.name == 'cocacola-life'){
         body.style.backgroundColor = this.green
+        animation.finished.then(() => {
+          path.setAttribute('d', 'M 500.708 -0.309 L 0.708 -0.309 L 0.708 499.691 L 500.708 499.691 C 500.708 499.691 500.708 455.55 500.708 399.691 C 500.708 329.261 500.708 368.532 500.708 299.691 C 500.708 253.305 500.708 314.507 500.708 199.691 C 500.708 160.042 500.708 150.016 500.708 99.691 C 500.708 28.961 500.708 -0.309 500.708 -0.309 Z')
+          path.setAttribute('fill', this.green)
+        })
       }
       else if(to.params.name == 'cocacola-cherry'){
         body.style.backgroundColor = this.purple
+        animation.finished.then(() => {
+          path.setAttribute('d', 'M 500.708 -0.309 L 0.708 -0.309 L 0.708 499.691 L 500.708 499.691 C 500.708 499.691 500.708 455.55 500.708 399.691 C 500.708 329.261 500.708 368.532 500.708 299.691 C 500.708 253.305 500.708 314.507 500.708 199.691 C 500.708 160.042 500.708 150.016 500.708 99.691 C 500.708 28.961 500.708 -0.309 500.708 -0.309 Z')
+          path.setAttribute('fill', this.purple)
+        })
       }
-      else if(to.params.name == 'cocacola-zero' || this.$route.params.name == 'diet-coke' || this.$route.params.name == 'cocacola-light'){
+      else if(to.params.name == 'cocacola-zero' || to.params.name == 'diet-coke' || to.params.name == 'cocacola-light'){
         body.style.backgroundColor = this.black
-        path.setAttribute('fill', this.red)
+        animation.finished.then(() => {
+          path.setAttribute('d', 'M 500.708 -0.309 L 0.708 -0.309 L 0.708 499.691 L 500.708 499.691 C 500.708 499.691 500.708 455.55 500.708 399.691 C 500.708 329.261 500.708 368.532 500.708 299.691 C 500.708 253.305 500.708 314.507 500.708 199.691 C 500.708 160.042 500.708 150.016 500.708 99.691 C 500.708 28.961 500.708 -0.309 500.708 -0.309 Z')
+          path.setAttribute('fill', this.black)
+        })
       }
       else{
         body.style.backgroundColor = this.red
+        animation.finished.then(() => {
+          path.setAttribute('d', 'M 500.708 -0.309 L 0.708 -0.309 L 0.708 499.691 L 500.708 499.691 C 500.708 499.691 500.708 455.55 500.708 399.691 C 500.708 329.261 500.708 368.532 500.708 299.691 C 500.708 253.305 500.708 314.507 500.708 199.691 C 500.708 160.042 500.708 150.016 500.708 99.691 C 500.708 28.961 500.708 -0.309 500.708 -0.309 Z')
+          path.setAttribute('fill', this.red)
+        })
       }
       
       next()

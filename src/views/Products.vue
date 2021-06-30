@@ -27,23 +27,15 @@ export default {
     fetch("http://localhost:3000/cokeImages")
     .then(res => res.json())
     .then(data => {
-      // console.log(data)
       const requireModified = data.map(cokeImage => {
         return {...cokeImage, src: require(`../assets/cocacola-cans/${cokeImage.name}.png`)}
       })
       this.cokeImages = requireModified
-      // console.log(modifiedArray)
-      // console.log(this.cokeImages)
     })
     .catch(err => {
       console.log(err.message)
     })
   },
-  // computed: {
-  //   stringCokeImages(){
-  //     return JSON.stringify(this.cokeImages)
-  //   }
-  // },
 
   methods: {
     beforeEnter(el){

@@ -19,3 +19,6 @@ These are the technologies I have used so far to build this app.
 3. Firebase firestore as the database instead of json-server
 4. Firebase storage for images storage
 5. Firebase Hosting
+
+### n/b: This is not mobile friendly. (yet)
+For now, the is best viewed on desktop screens
