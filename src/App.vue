@@ -1,13 +1,18 @@
 <template>
   <nav id="nav">
     
-    <transition name="logoAnime" appear>
+    <transition name="logoAnime" appear v-if="areWeInTheDomain">
       <div class="nav-item logo-home">
         <router-link :to="{ name: 'Home'}">Home</router-link>
       </div>
     </transition>
+    <transition name="logoAnime" appear v-if="!areWeInTheDomain">
+      <div class="nav-item logo-home">
+        <router-link :to="{ name: 'Adminauth'}">Admin Login</router-link>
+      </div>
+    </transition>
 
-    <transition name="navLinksAnime" appear>
+    <transition name="navLinksAnime" appear v-if="areWeInTheDomain">
       <ul class="nav-item nav-links">
         <li><router-link :to="{ name: 'Products'}">PRODUCTS</router-link></li>
         <li><a>WHAT'S NEW</a></li>
@@ -15,10 +20,22 @@
         <li><a>CONTACT US</a></li>
       </ul>
     </transition>
+    <transition name="navLinksAnime" appear v-if="!areWeInTheDomain">
+      <ul class="nav-item nav-links">
+        <li><router-link :to="{ name: 'Admin'}">ADMIN</router-link></li>
+        <li><a @click="mainWebsite">MAIN WEBSITE</a></li>
+      </ul>
+    </transition>
     
-    <transition name="purchaseBtnAnime" appear>
+    <transition name="purchaseBtnAnime" appear v-if="areWeInTheDomain">
       <div class="nav-item purchase-btn">
         <router-link :to="{ name: 'Products'}">BUY PRODUCT</router-link>
+      </div>
+    </transition>
+
+    <transition name="purchaseBtnAnime" appear v-if="!areWeInTheDomain">
+      <div class="nav-item purchase-btn">
+        <router-link :to="{ name: 'Adminauth'}">LOGIN</router-link>
       </div>
     </transition>
     
@@ -34,6 +51,65 @@
   </router-view> -->
 
 </template>
+
+<script>
+export default {
+  name: 'App',
+  data(){
+    return {
+      areWeInTheDomain: true,
+      nextDomainLink: ''
+    } 
+  },
+  methods: {
+    mainWebsite(){
+      window.location.assign(this.nextDomainLink)
+    }
+  },
+  created(){
+    const host =  window.location.host;
+    const parts = host.split('.'); 
+    const domainLength = 3;
+
+    // variables used to assign this.nextdomainlink
+    let copyParts = [...parts]
+    let tempDomainLink = ''
+
+    // get the particulat protocol
+    const protocol = window.location.protocol
+
+    if (parts.length === (domainLength - 1) || parts[0] === 'www'){
+      this.areWeInTheDomain = true
+
+      if (parts.length === (domainLength - 1)){ 
+        copyParts.unshift('admin')
+        tempDomainLink = copyParts.join('.')
+      }
+      if (parts[0] === 'www'){
+        copyParts[0] = 'admin'
+        tempDomainLink = copyParts.join('.')
+      }
+      
+    } 
+    else if (parts[0] === 'admin'){
+      this.areWeInTheDomain = false
+      copyParts.shift()
+      tempDomainLink = copyParts.join('.')
+    } 
+    else {
+      this.areWeInTheDomain = true
+    }
+    
+    // check for the protocol to know which to use
+    if (protocol === "http:"){
+      this.nextDomainLink = `http://${tempDomainLink}`
+    }
+    if (protocol === "https:"){
+      this.nextDomainLink = `https://${tempDomainLink}`
+    }
+  }
+}
+</script>
 
 
 <style>
@@ -54,6 +130,7 @@
   font-size: 0.6rem;
   color: white;
   text-decoration: none;
+  cursor: pointer;
 }
 #nav a.router-link-exact-active {
   color: rgb(116, 10, 10);

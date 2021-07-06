@@ -1,6 +1,6 @@
 <template>
   <transition appear @before-enter="beforeEnterSvg" @enter="enterSvg" @after-enter="afterEnter" v-if="routeObj.name">
-    <svg id="morph" height="100%" width="100%" viewBox="0 0 498 500" preserveAspectRatio="none">
+    <svg id="morph" height="100%" width="100%" viewBox="5 5 495 495" preserveAspectRatio="none">
       <path class="morph" d="" fill="rgb(31, 30, 30)"></path>
     </svg>
   </transition>
@@ -140,6 +140,7 @@ export default {
     beforeRouteUpdate(to, from, next){
       const body = document.getElementById('body');
       const path = document.querySelector('.morph');
+      const svg = document.querySelector("#morph")
       
       const arrayfromProxy = JSON.parse(JSON.stringify(this.cokeImagesArray))
       const obj = arrayfromProxy.find(obj => {
@@ -148,6 +149,7 @@ export default {
       this.routeObj = obj
 
       // trigger anime.js
+      svg.style.zIndex = "1"
       var animation = anime({
         targets: '.morph',
           d: [
@@ -162,6 +164,7 @@ export default {
       if(to.params.name == 'cocacola-life'){
         body.style.backgroundColor = this.green
         animation.finished.then(() => {
+          svg.style.zIndex = "-1"
           path.setAttribute('d', 'M 500.708 -0.309 L 0.708 -0.309 L 0.708 499.691 L 500.708 499.691 C 500.708 499.691 500.708 455.55 500.708 399.691 C 500.708 329.261 500.708 368.532 500.708 299.691 C 500.708 253.305 500.708 314.507 500.708 199.691 C 500.708 160.042 500.708 150.016 500.708 99.691 C 500.708 28.961 500.708 -0.309 500.708 -0.309 Z')
           path.setAttribute('fill', this.green)
         })
@@ -169,20 +172,29 @@ export default {
       else if(to.params.name == 'cocacola-cherry'){
         body.style.backgroundColor = this.purple
         animation.finished.then(() => {
+          svg.style.zIndex = "-1"
           path.setAttribute('d', 'M 500.708 -0.309 L 0.708 -0.309 L 0.708 499.691 L 500.708 499.691 C 500.708 499.691 500.708 455.55 500.708 399.691 C 500.708 329.261 500.708 368.532 500.708 299.691 C 500.708 253.305 500.708 314.507 500.708 199.691 C 500.708 160.042 500.708 150.016 500.708 99.691 C 500.708 28.961 500.708 -0.309 500.708 -0.309 Z')
           path.setAttribute('fill', this.purple)
         })
       }
       else if(to.params.name == 'cocacola-zero' || to.params.name == 'diet-coke' || to.params.name == 'cocacola-light'){
         body.style.backgroundColor = this.black
+        if(from.params.name == 'cocacola-zero' || from.params.name == 'diet-coke' || from.params.name == 'cocacola-light'){
+           path.setAttribute('fill', this.red) 
+        }
         animation.finished.then(() => {
+          svg.style.zIndex = "-1"
           path.setAttribute('d', 'M 500.708 -0.309 L 0.708 -0.309 L 0.708 499.691 L 500.708 499.691 C 500.708 499.691 500.708 455.55 500.708 399.691 C 500.708 329.261 500.708 368.532 500.708 299.691 C 500.708 253.305 500.708 314.507 500.708 199.691 C 500.708 160.042 500.708 150.016 500.708 99.691 C 500.708 28.961 500.708 -0.309 500.708 -0.309 Z')
           path.setAttribute('fill', this.black)
         })
       }
       else{
         body.style.backgroundColor = this.red
+        if(from.params.name == 'cocacola-classic' || from.params.name == 'new-cocacola' || from.params.name == 'cocacola-vanilla'){
+           path.setAttribute('fill', this.black) 
+        }
         animation.finished.then(() => {
+          svg.style.zIndex = "-1"
           path.setAttribute('d', 'M 500.708 -0.309 L 0.708 -0.309 L 0.708 499.691 L 500.708 499.691 C 500.708 499.691 500.708 455.55 500.708 399.691 C 500.708 329.261 500.708 368.532 500.708 299.691 C 500.708 253.305 500.708 314.507 500.708 199.691 C 500.708 160.042 500.708 150.016 500.708 99.691 C 500.708 28.961 500.708 -0.309 500.708 -0.309 Z')
           path.setAttribute('fill', this.red)
         })
