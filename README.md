@@ -14,6 +14,7 @@ These are the technologies I have used so far to build this app.
 2. anime.js
 3. json-server to serve up a local json file
 4. Implemented a subdomain feature for an admin page
+5. Firebase Auth for Admins
 
 ## Subsequent (future) additon
 1. Firebase firestore as the database instead of json-server
