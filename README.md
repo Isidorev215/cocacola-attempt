@@ -2,7 +2,7 @@
 This is a personal project. A self-administred test of sorts.<br>
 The goal is to reproduce a **cocacola based UI/UX design moockup** I found sometime ago.<br><br>
 [<img src="https://github.com/Isidorev215/cocacola-attempt/blob/c2a86122d4f331053ac39a595294f10e822805fc/src/assets/cocacola-attempt-poster-readme.JPG" width="300" alt="watch the video" title="A google drive link">](https://drive.google.com/file/d/1S4czvcU9trv1kTudwhuSrQxUU5hw7qY8/view?usp=sharing)<br>
-*click to watch video* <br>
+*click on the image to the watch video* <br>
 There are numerous unnecesary animations for a real project. This is a "test your might" situation.
 
 

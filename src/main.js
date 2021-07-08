@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import index from './router/index'
 import admin from './router/admin'
+import { theAuth } from './firebase/config'
 import styles from './styles.css'
 
 const host = window.location.host;
@@ -21,5 +22,11 @@ const routerSelect = () => {
 };
 const router = routerSelect(); 
 
+// refreshing problem
+let app;
+theAuth.onAuthStateChanged(() => {
+  if(!app){
+    app = createApp(App).use(router).mount('#app')
+  }
+})
 
-createApp(App).use(router).mount('#app')
