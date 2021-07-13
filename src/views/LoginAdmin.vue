@@ -3,7 +3,7 @@
     <form class="login" @submit.prevent="handleSubmit">
       <div>
         <label for="email">Email</label>
-        <input type="email" name="email" v-model="email">
+        <input type="email" name="email" v-model="email" autocomplete="off">
       </div>
 
       <div class="password">

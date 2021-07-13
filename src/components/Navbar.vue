@@ -120,7 +120,7 @@ export default {
 
 <style>
 #nav {
-  padding: 3% 5% 0;
+  padding: 3% 5% 3%;
   position: relative;
   z-index: 1000;
   height: 10vh;
