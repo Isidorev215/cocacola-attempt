@@ -10,6 +10,7 @@
       </div>
       <form class="upload-form" @submit.prevent="handleSubmit">
         <input type="file" name="file" id="input-file" title="select Image to Upload" @change="handleFileChange" @blur="handleBlurEvent">
+        <p class="file-info">Requirements: PNG less than 100kb</p>
         <input type="text" name="title" placeholder="Image Title" v-model="imageTitle"  @blur="handleBlurEvent">
         <textarea name="description" cols="30" rows="5" placeholder="Description..." v-model="descriptionVModel" @input="handleInputEvent" @blur="handleBlurEvent"></textarea>
         <div class="nutrition">
@@ -52,6 +53,7 @@ import Accordion from '../components/Accordion'
 import Fieldset from '../components/Fieldset'
 import getUser from '../composables/getUser'
 import slugify from '../composables/slugify'
+import validateBeforeSubmit from '../composables/validateBeforeSubmit'
 
 export default {
   props: ['admin'],
@@ -89,7 +91,11 @@ export default {
       // console.log(obj1)
       error.value = null
       if(obj1.value !== null && obj1.percent !== null){
-        nutritionArray.value[0] = obj1
+        if(nutritionArray.value.length !== 5){
+          nutritionArray.value.splice(0, 0, obj1)
+        }else{
+          nutritionArray.value[0] = obj1
+        }
       }
       else{
         error.value = err
@@ -100,7 +106,11 @@ export default {
       // console.log(obj2)
       error.value = null
       if(obj2.value !== null && obj2.percent !== null){
-        nutritionArray.value[1] = obj2
+        if(nutritionArray.value.length !== 5){
+        nutritionArray.value.splice(1, 0, obj2)
+        }else{
+          nutritionArray.value[1] = obj2
+        }
       }
       else{
         error.value = err
@@ -111,7 +121,11 @@ export default {
       // console.log(obj3)
       error.value = null
       if(obj3.value !== null && obj3.percent !== null){
-        nutritionArray.value[2] = obj3
+        if(nutritionArray.value.length !== 5){
+        nutritionArray.value.splice(2, 0, obj3)
+        }else{
+          nutritionArray.value[2] = obj3
+        }
       }
       else{
         error.value = err
@@ -122,7 +136,11 @@ export default {
       // console.log(obj4)
       error.value = null
       if(obj4.value !== null && obj4.percent !== null){
-        nutritionArray.value[3] = obj4
+        if(nutritionArray.value.length !== 5){
+        nutritionArray.value.splice(3, 0, obj4)
+        }else{
+          nutritionArray.value[3] = obj4
+        }
       }
       else{
         error.value = err
@@ -133,7 +151,11 @@ export default {
       // console.log(obj5)
       error.value = null
       if(obj5.value !== null && obj5.percent !== null){
-        nutritionArray.value[4] = obj5
+        if(nutritionArray.value.length !== 5){
+        nutritionArray.value.splice(4, 0, obj5)
+        }else{
+          nutritionArray.value[4] = obj5
+        }
       }
       else{
         error.value = err
@@ -143,34 +165,36 @@ export default {
 
     const handleFileChange = (event) => {
       error.value = null
-      event.target.style.border = ''
+      event.target.style.border = '1px solid rgb(86, 126, 68)'
 
       const selectedFile = event.target.files[0]
       if(selectedFile){
         if(selectedFile.type && selectedFile.type !== "image/png"){
-          console.log("This is not a png image")
           error.value = 'Image must be png format'
           stagingImage.value = null
           event.target.style.border = '1px solid rgb(116, 10, 10)'
-          return;
+          event.target.value = null
         }
-        if(selectedFile.size > 102400){
-          console.log('file is too large')
+        else if(selectedFile.size > 102400){
           error.value = "Image must be less than 100kb"
           stagingImage.value  = null
           event.target.style.border = '1px solid rgb(116, 10, 10)'
-          return;
+          event.target.value = null
         }
-        const reader = new FileReader();
-        reader.addEventListener('load', (e) => {
-          stagingImage.value = e.target.result;
-        });
-        reader.readAsDataURL(selectedFile);
-        fileObjectToStorage.value = selectedFile
-        event.target.style.border = '1px solid rgb(86, 126, 68)'
+        else{
+          const reader = new FileReader();
+          reader.addEventListener('load', (e) => {
+            stagingImage.value = e.target.result;
+          });
+          reader.readAsDataURL(selectedFile);
+          fileObjectToStorage.value = selectedFile
+          error.value = null
+          event.target.style.border = '1px solid rgb(86, 126, 68)'
+        }
       }else{
         error.value = "No Image Selected"
         stagingImage.value = null
+        fileObjectToStorage.value = null
       }
     }
     
@@ -191,7 +215,7 @@ export default {
     }
     const handleBlurEvent = (event) => {
       const errorPara = document.querySelector('.upload-form .error')
-      errorPara.style.color = 'rgb(225, 0, 0)'
+      errorPara.style.color = ''
 
       const inputObject = {
         title: imageTitle.value,
@@ -211,13 +235,14 @@ export default {
             event.target.style.border = "1px solid rgb(116, 10, 10)"
             return;
           }
-            event.target.style.border = "1px solid rgb(86, 162, 68)"
-            error.value = null
-            return;
+          event.target.style.border = "1px solid rgb(86, 162, 68)"
+          error.value = null
+          return;
         }
         event.target.style.border = '1px solid rgb(86, 162, 68)'
         error.value = null
-        if(inputObject.title !== null && inputObject.description !== null && inputObject.file !== null && inputObject.backgroundColor !== null && inputObject.svgColor !== null && inputObject.nutrition.length == 5){
+        
+        if(inputObject.title !== null && inputObject.description !== null && inputObject.file !== null && inputObject.backgroundColor !== null && inputObject.svgColor !== null && inputObject.nutrition.length === 5){
           errorPara.style.color = 'rgb(86, 162, 68)'
           error.value = "All Fields are good!"
           return;
@@ -233,19 +258,23 @@ export default {
     }
 
     const handleSubmit = () => {
-      // slugify imageTitle
+      // slugify imageTitle remeber to attach it later and the src too by spreading...
       const slugifiedName = slugify(imageTitle.value)
-
-      console.log({
-        title: imageTitle.value,
-        description: description.value,
+      const temp = {
+        title: imageTitle.value == '' || imageTitle.value == null ? null : imageTitle.value,
+        description: description.value == '' || description.value == null ? null : description.value,
         file: fileObjectToStorage.value,
-        src: 'from the image upload',
-        name: slugifiedName,
-        nutrition: JSON.parse(JSON.stringify(nutritionArray.value)),
+        nutrition: nutritionArray.value.length === 5 ? JSON.parse(JSON.stringify(nutritionArray.value)) : null,
         backgroundColor: backgroundColor.value,
-        svgColor: svgColor.value
-      })
+        svgColor: svgColor.value,
+      }
+      const validateResult = validateBeforeSubmit(temp)
+      if (validateResult){
+        // do the form stuff
+      }
+      else{
+        error.value = 'Check the form fields: All are required'
+      }
     }
     
     return { user, handleBlurEvent, handleInputEvent, handleFileChange, stagingImage, handleSubmit, nutrition1, nutrition2, nutrition3, nutrition4, nutrition5, 
@@ -326,6 +355,10 @@ export default {
   flex-direction: column;
   width: 100%;
   align-items: flex-start;
+}
+.upload-form .file-info{
+  color: rgb(185, 189, 183);
+  font-size: 12px;
 }
 .upload-form .error{
   color: rgb(255, 0, 0);

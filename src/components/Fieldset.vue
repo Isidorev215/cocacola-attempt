@@ -18,7 +18,7 @@ export default {
         const percentInput = ref(null)
         const fieldset = ref(null)
 
-        const handleOnBlur = () => {
+        const handleOnBlur = (event) => {
             // console.log(typeof titleInput.value, typeof valueInput.value, typeof percentInput.value)
             if(titleInput.value && valueInput.value && percentInput.value){
                 if(valueInput.value <= 100 && percentInput.value <= 100){
@@ -40,6 +40,7 @@ export default {
                         percent: null,
                     })
                     // console.log(fieldset.value)
+                    event.target.style.border = "1px solid (116, 10, 10)"
                     fieldset.value.style.border = "2px solid rgb(116, 10, 10)"
                     const legend = fieldset.value.getElementsByTagName('legend')
                     legend[0].style.color = "tomato"
@@ -53,6 +54,7 @@ export default {
                     percent: null
                 })
                 // console.log(fieldset.value)
+                event.target.style.border = "1px solid (116, 10, 10)"
                 fieldset.value.style.border = "2px solid rgb(116, 10, 10)"
                 const legend = fieldset.value.getElementsByTagName('legend')
                 legend[0].style.color = "tomato"
