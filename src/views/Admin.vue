@@ -1,284 +1,61 @@
 <template>
   <div class="admin-container">
-    <div class="flex-child access-information">
-      <h4>Current Products</h4>
-      <Accordion />
-    </div>
-    <div class="flex-child upload-here">
-      <div class="staging-area">
-        <img v-if="stagingImage" class="staged-img" :src="stagingImage">
+    <div class="accordion-container">
+      <header>
+        <h1>Current Products</h1>
+        <button @click="handleShowModal">Upload +</button>
+      </header>
+      <div class="displayImage">
+        <img v-if="imageUrl" :src="imageUrl" alt="Click on a list item to stage an image">
+        <p class="alternate" v-else>Click a Link item to stage image</p>
       </div>
-      <form class="upload-form" @submit.prevent="handleSubmit">
-        <input type="file" name="file" id="input-file" title="select Image to Upload" @change="handleFileChange" @blur="handleBlurEvent">
-        <p class="file-info">Requirements: PNG less than 100kb</p>
-        <input type="text" name="title" placeholder="Image Title" v-model="imageTitle"  @blur="handleBlurEvent">
-        <textarea name="description" cols="30" rows="5" placeholder="Description..." v-model="descriptionVModel" @input="handleInputEvent" @blur="handleBlurEvent"></textarea>
-        <div class="nutrition">
-          <Fieldset className="Nutriton-one" legendName="Nutrition-1" nutritionName="Sodium" @fieldsetComplete="nutrition1" @focusout="handleBlurEvent" />
-          <Fieldset className="Nutriton-two" legendName="Nutrition-2" nutritionName="Total Fats" @fieldsetComplete="nutrition2" @focusout="handleBlurEvent" />
-          <Fieldset className="Nutriton-three" legendName="Nutrition-3" nutritionName="Sodium (mg)" @fieldsetComplete="nutrition3" @focusout="handleBlurEvent" />
-          <Fieldset className="Nutriton-four" legendName="Nutrition-4" nutritionName="Potasium" @fieldsetComplete="nutrition4" @focusout="handleBlurEvent" />
-          <Fieldset className="Nutriton-five" legendName="Nutrition-5" nutritionName="Calcium" @fieldsetComplete="nutrition5" @focusout="handleBlurEvent" />
-        </div>
-        <div class="backgroundColor">
-          <label for="backgroundColor">Background Color</label>
-          <select name="backgroundColor" id="backgroundColor" v-model="backgroundColor" @blur="handleBlurEvent">
-            <option value="rgb(116, 10, 10)">Red</option>
-            <option value="rgb(31, 30, 30)">Black</option>
-            <option value="rgb(86, 126, 68)">Green</option>
-            <option value="#86606e">Purple</option>
-          </select>
-        </div>
-        <div class="svgColor">
-          <label for="svgColor">SVG Color</label>
-          <select name="svgColor" id="svgColor" v-model="svgColor" @blur="handleBlurEvent">
-            <option value="rgb(116, 10, 10)">Red</option>
-            <option value="rgb(31, 30, 30)">Black</option>
-            <option value="rgb(86, 126, 68)">Green</option>
-            <option value="#86606e">Purple</option>
-          </select>
-        </div>
-        
-        <p class="error" v-show="true">{{error || "All fields are required"}}</p>
-        <button type="submit">Upload</button>
-      </form>
+      <div class="accordion">
+        <Accordion @sendImage="receiveImage"/>
+      </div>
+    </div>
+    <div id="uploadModal" class="modal" v-if="showModal" @click.self="showModal = false">
+      <UploadForm  @closeModal="showModal = false" />
     </div>
   </div>
 </template>
 
 <script>
-import { ref, watch } from 'vue'
+import { watch } from 'vue'
 import { useRouter } from 'vue-router'
 import Accordion from '../components/Accordion'
-import Fieldset from '../components/Fieldset'
+import UploadForm from '../components/UploadForm'
 import getUser from '../composables/getUser'
-import slugify from '../composables/slugify'
-import validateBeforeSubmit from '../composables/validateBeforeSubmit'
-
 export default {
   props: ['admin'],
+  data(){
+    return {
+      showModal: false,
+      imageUrl: null
+    }
+  },
   components: {
     Accordion,
-    Fieldset
+    UploadForm
+  },
+  methods: {
+    handleShowModal(){
+      this.showModal = true
+    },
+    receiveImage(url){
+      this.imageUrl = null
+      this.imageUrl = url
+    }
   },
   setup(){
     const router = useRouter()
-    
-    const stagingImage = ref(null)
-    
-    const fileObjectToStorage = ref(null)
-    const imageTitle = ref(null)
-
-    const descriptionVModel = ref(null)
-    const description = ref(null) 
-    
-    const nutritionArray = ref([])
-    const backgroundColor = ref(null)
-    const svgColor = ref(null)
-
-    const error = ref(null)
-    
+    const { user } = getUser()
 
     // watch for logged outing
-    const { user } = getUser()
     watch(user, () => {
       if(!user.value){
-        router.push({ name: 'Loginadmin'})
+        router.push({ name: 'LoginAdmin'})
       }
     })
-    // methods for the fieldsets
-    const nutrition1 = (err, obj1) => {
-      // console.log(obj1)
-      error.value = null
-      if(obj1.value !== null && obj1.percent !== null){
-        if(nutritionArray.value.length !== 5){
-          nutritionArray.value.splice(0, 0, obj1)
-        }else{
-          nutritionArray.value[0] = obj1
-        }
-      }
-      else{
-        error.value = err
-        nutritionArray.value.splice(0, 1)//remove that element
-      }
-    }
-    const nutrition2 = (err, obj2) => {
-      // console.log(obj2)
-      error.value = null
-      if(obj2.value !== null && obj2.percent !== null){
-        if(nutritionArray.value.length !== 5){
-        nutritionArray.value.splice(1, 0, obj2)
-        }else{
-          nutritionArray.value[1] = obj2
-        }
-      }
-      else{
-        error.value = err
-        nutritionArray.value.splice(1, 1)//remove that element
-      }
-    }
-    const nutrition3 = (err, obj3) => {
-      // console.log(obj3)
-      error.value = null
-      if(obj3.value !== null && obj3.percent !== null){
-        if(nutritionArray.value.length !== 5){
-        nutritionArray.value.splice(2, 0, obj3)
-        }else{
-          nutritionArray.value[2] = obj3
-        }
-      }
-      else{
-        error.value = err
-        nutritionArray.value.splice(2, 1)//remove that element
-      }
-    }
-    const nutrition4 = (err, obj4) => {
-      // console.log(obj4)
-      error.value = null
-      if(obj4.value !== null && obj4.percent !== null){
-        if(nutritionArray.value.length !== 5){
-        nutritionArray.value.splice(3, 0, obj4)
-        }else{
-          nutritionArray.value[3] = obj4
-        }
-      }
-      else{
-        error.value = err
-        nutritionArray.value.splice(3, 1)//remove that element
-      }
-    }
-    const nutrition5 = (err, obj5) => {
-      // console.log(obj5)
-      error.value = null
-      if(obj5.value !== null && obj5.percent !== null){
-        if(nutritionArray.value.length !== 5){
-        nutritionArray.value.splice(4, 0, obj5)
-        }else{
-          nutritionArray.value[4] = obj5
-        }
-      }
-      else{
-        error.value = err
-        nutritionArray.value.splice(4, 1)//remove that element
-      }
-    }
-
-    const handleFileChange = (event) => {
-      error.value = null
-      event.target.style.border = '1px solid rgb(86, 126, 68)'
-
-      const selectedFile = event.target.files[0]
-      if(selectedFile){
-        if(selectedFile.type && selectedFile.type !== "image/png"){
-          error.value = 'Image must be png format'
-          stagingImage.value = null
-          event.target.style.border = '1px solid rgb(116, 10, 10)'
-          event.target.value = null
-        }
-        else if(selectedFile.size > 102400){
-          error.value = "Image must be less than 100kb"
-          stagingImage.value  = null
-          event.target.style.border = '1px solid rgb(116, 10, 10)'
-          event.target.value = null
-        }
-        else{
-          const reader = new FileReader();
-          reader.addEventListener('load', (e) => {
-            stagingImage.value = e.target.result;
-          });
-          reader.readAsDataURL(selectedFile);
-          fileObjectToStorage.value = selectedFile
-          error.value = null
-          event.target.style.border = '1px solid rgb(86, 126, 68)'
-        }
-      }else{
-        error.value = "No Image Selected"
-        stagingImage.value = null
-        fileObjectToStorage.value = null
-      }
-    }
-    
-    const handleInputEvent = (event) => {
-      const errorPara = document.querySelector('.upload-form .error')
-      description.value = descriptionVModel.value
-      const maxLength = 80
-      const valueLength = event.target.value.length
-      if( valueLength > maxLength){
-        error.value = `Limit: ${maxLength - valueLength} chars left`
-        errorPara.style.color = 'rgb(225, 0, 0)'
-        description.value = null
-        return;
-      }
-      errorPara.style.color = 'rgb(86, 162, 68)'
-      error.value = `${maxLength - valueLength} chars left`
-      return;
-    }
-    const handleBlurEvent = (event) => {
-      const errorPara = document.querySelector('.upload-form .error')
-      errorPara.style.color = ''
-
-      const inputObject = {
-        title: imageTitle.value,
-        description: description.value,
-        file: fileObjectToStorage.value,
-        nutrition: JSON.parse(JSON.stringify(nutritionArray.value)),
-        backgroundColor: backgroundColor.value,
-        svgColor: svgColor.value
-      }
-      
-      if(event.target.value){
-        if(event.target.localName == 'textarea'){
-          const maxLength = 80
-          const valueLength = event.target.value.length
-          if( valueLength > maxLength){
-            errorPara.style.color = 'rgb(225, 0, 0)'
-            event.target.style.border = "1px solid rgb(116, 10, 10)"
-            return;
-          }
-          event.target.style.border = "1px solid rgb(86, 162, 68)"
-          error.value = null
-          return;
-        }
-        event.target.style.border = '1px solid rgb(86, 162, 68)'
-        error.value = null
-        
-        if(inputObject.title !== null && inputObject.description !== null && inputObject.file !== null && inputObject.backgroundColor !== null && inputObject.svgColor !== null && inputObject.nutrition.length === 5){
-          errorPara.style.color = 'rgb(86, 162, 68)'
-          error.value = "All Fields are good!"
-          return;
-        }
-        return;
-      }
-      if(event.target.value == null || event.target.value == ''){
-        event.target.style.border = "1px solid rgb(116, 10, 10)"
-        errorPara.style.color = 'rgb(225, 0, 0)'
-        error.value = `The ${event.target.getAttribute("name")} field is required!`
-        return;
-      }
-    }
-
-    const handleSubmit = () => {
-      // slugify imageTitle remeber to attach it later and the src too by spreading...
-      const slugifiedName = slugify(imageTitle.value)
-      const temp = {
-        title: imageTitle.value == '' || imageTitle.value == null ? null : imageTitle.value,
-        description: description.value == '' || description.value == null ? null : description.value,
-        file: fileObjectToStorage.value,
-        nutrition: nutritionArray.value.length === 5 ? JSON.parse(JSON.stringify(nutritionArray.value)) : null,
-        backgroundColor: backgroundColor.value,
-        svgColor: svgColor.value,
-      }
-      const validateResult = validateBeforeSubmit(temp)
-      if (validateResult){
-        // do the form stuff
-      }
-      else{
-        error.value = 'Check the form fields: All are required'
-      }
-    }
-    
-    return { user, handleBlurEvent, handleInputEvent, handleFileChange, stagingImage, handleSubmit, nutrition1, nutrition2, nutrition3, nutrition4, nutrition5, 
-             imageTitle, descriptionVModel, backgroundColor, svgColor, error }
   },
   beforeRouteEnter(){
     const nav = document.querySelector('#nav')
@@ -291,92 +68,64 @@ export default {
 .admin-container{
   height: 90vh;
   overflow-y: hidden;
-  position: relative;
-  display: flex;
 }
-.access-information{
-  flex: 1;
-  padding-top: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.admin-container .upload-here{
-  flex: 3;
-  padding-top: 10px;
-  display: flex;
-  border-left: 1px solid rgb(86, 126, 68);
-}
-.staging-area{
-  /* flex: 1;
-  flex-basis: 15%; */
-  width: 45%;
-}
-.staging-area .staged-img{
+.accordion-container{
+  width: 100%;
   height: 100%;
-  width: 100%;
+  margin: auto;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto 70%;
+  grid-template-rows: 8% auto;
+  grid-gap: 0;
 }
-.upload-form{
-  /* flex: 2; */
-  width: 55%;
+.accordion-container header{
+  font-weight: lighter;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  margin-top: 2%;
-  margin-right: 5%;
+  justify-content: space-between;
+  align-items: center;
+  grid-area: 1/1/2/3;
+  padding: 0 8% 0 8%;
 }
-.upload-form input:first-child{
-  padding: 0;
-  color: unset;
-  background-color: unset;
-  width: 40%;
+.accordion-container header h1{
+  font-weight: lighter;
 }
-.upload-form input, .upload-form textarea, .upload-form select{
-  padding: 5px;
-  color: white;
-  background-color: black;
-  border-radius: 5px;
-  border: none;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  width: 40%;
-}
-.upload-form > input, .upload-form > textarea, .upload-form select{
-  border: 1px solid rgb(116, 10, 10);
-}
-.upload-form div.nutrition{
-  margin: 2% 0 2%;
-}
-.upload-form div.backgroundColor, .upload-form div.svgColor{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: flex-start;
-}
-.upload-form .file-info{
-  color: rgb(185, 189, 183);
-  font-size: 12px;
-}
-.upload-form .error{
-  color: rgb(255, 0, 0);
-  font-size: 12px;
-}
-.upload-form button{
-  width: 30%;
-  background-color: transparent;
-  color: white;
-  margin: 2% 0 3%;
-  padding: 3% 0 3%;
+.accordion-container header button{
   border: 1px solid white;
   border-radius: 25px;
-  align-self: center;
-}
-.upload-form button:hover{
-  background-color: rgb(86, 126, 68);
+  background: none;
   color: white;
+  padding: 1% 2%;
+  cursor: pointer;
+}
+.accordion-container header button:hover{
+  background-color: rgb(86, 126, 68);
+}
+.accordion{
+  grid-area: 2/2/3/3;
+  overflow: auto;
+  padding-top: 7%;
+}
+.displayImage{
+  grid-area: 2/1/3/2;
+  margin-right: 5%;
+}
+.displayImage img{
+  width: 100%;
+  height: 100%;
+}
+
+.modal{
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
+  overflow: hidden;
+  background-color: rgb(0, 0, 0);
+  background-color: rgb(0, 0, 0, 0.7);
 }
 
 </style>

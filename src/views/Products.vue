@@ -4,37 +4,49 @@
       @before-enter="beforeEnter" 
       @enter="enter">
         <li class="dynamic-flex-children" v-for="cokeImage in cokeImages" :key="cokeImage.id">
-            <router-link class="hover-on-me" :to="{ name: 'Showcase', params: { name: cokeImage.name }}">
-              <img :src="cokeImage.src" :alt="cokeImage.title" class="can-image">
+            <router-link class="hover-on-me" :to="{ name: 'Showcase', params: { name: cokeImage.name, id: cokeImage.id, bgColor: cokeImage.backgroundColor }}">
+              <img :src="cokeImage.imageUrl" :alt="cokeImage.title" class="can-image">
             </router-link>
           <p>{{cokeImage.title}}</p>
-          <img :src="cokeImage.src" :alt="`${cokeImage.title} small size`" class="can-small-size">
+          <img :src="cokeImage.imageUrl" :alt="`${cokeImage.title} small size`" class="can-small-size">
         </li>
     </transition-group>
+    <div class="alternate" v-else>
+      <Spinner />
+    </div>
   </div>
 </template>
 
 <script>
+import Spinner from '../components/Spinner'
 import anime from 'animejs/lib/anime.es.js';
+import getCollection from '../composables/getCollection'
 export default {
   name: 'Products',
   data(){
     return {
-      cokeImages: []
+      cokeImages: [],
+      error: null
     }
   },
+  components: {
+    Spinner
+  },
   mounted(){
-    fetch("http://localhost:3000/cokeImages")
-    .then(res => res.json())
-    .then(data => {
-      const requireModified = data.map(cokeImage => {
-        return {...cokeImage, src: require(`../assets/cocacola-cans/${cokeImage.name}.png`)}
-      })
-      this.cokeImages = requireModified
-    })
-    .catch(err => {
-      console.log(err.message)
-    })
+    const { documents , collectionError } = getCollection('products')
+    this.cokeImages = documents
+    this.error = collectionError
+    // fetch("http://localhost:3000/cokeImages")
+    // .then(res => res.json())
+    // .then(data => {
+    //   const requireModified = data.map(cokeImage => {
+    //     return {...cokeImage, src: require(`../assets/cocacola-cans/${cokeImage.name}.png`)}
+    //   })
+    //   this.cokeImages = requireModified
+    // })
+    // .catch(err => {
+    //   console.log(err.message)
+    // })
   },
 
   methods: {
@@ -108,6 +120,9 @@ export default {
 }
 .products-container .can-image:hover ~ .can-small-size, .hover-on-me:hover ~ .can-small-size{
   transform: translate(80px, -30px);
+}
+.products-container .alternate{
+  transform: translateY(200px);
 }
 
 

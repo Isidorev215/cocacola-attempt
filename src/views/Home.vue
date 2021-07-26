@@ -1,7 +1,7 @@
 <template>
   <main id="landing-page">
     <transition appear @before-enter="beforeEnterImg" @enter="enterImg">
-      <img class="center-coke-img" src="../assets/cocacola-cans/cocacola-classic.png" alt="Classic Cocacola can">
+      <img class="center-coke-img" src="../assets/cocacola-classic.png" alt="Classic Cocacola can">
     </transition>
 
     <transition-group tag="section" class="main-section grid-container" appear 
@@ -19,7 +19,7 @@
       
       <div class="item3 grid-children" key="3">
         <video ref="vid" autoplay loop>
-          <source src="../assets/a-glass-of-fizzy-coke.mp4" type="video/mp4">
+          <source src="https://firebasestorage.googleapis.com/v0/b/cocacola-attempt.appspot.com/o/videos%2FProjectVideos%2Fpouring-coke-1-videvo-compressed.mp4?alt=media&token=66861f48-4592-4bdc-93f8-44e4ecda04ce" type="video/mp4">
         </video>
         <button @click="toggleplay">
           <span v-if="isPlaying" class="material-icons">pause</span>
@@ -221,7 +221,7 @@ export default {
   position: relative;
   z-index: 2;
   background-color: rgb(116, 10, 10);
-  background-image: url('../assets/cocacola-cans/diet-coke.png');
+  background-image: url('../assets/diet-coke.png');
   background-repeat: no-repeat;
   background-size: 75px;
   background-position: 100% 150%;
