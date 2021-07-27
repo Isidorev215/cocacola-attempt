@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "cocacola-attempt"
+  },
+  "targets": {
+    "cocacola-attempt": {
+      "hosting": {
+        "app": [
+          "cocacola-attempt"
+        ],
+        "admin": [
+          "admin-cocacola-attempt"
+        ]
+      }
+    }
   }
 }

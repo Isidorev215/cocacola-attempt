@@ -19,7 +19,7 @@ const routes = [
     // meta: { transition: 'productslide' },
   },
   {
-    path: '/products/:name',
+    path: '/products/:id',
     name: 'Showcase',
     component: Showcase,
     props: true

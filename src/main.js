@@ -13,7 +13,7 @@ const routerSelect = () => {
   let routes;
   if (parts.length === (domainLength - 1) || parts[0] === 'www') {
     routes = index;
-  } else if (parts[0] === 'admin') {
+  } else if (parts[0] === 'admin' || parts[0] === 'admin-cocacola-attempt') {
     routes = admin;
   } else {
     routes = index;

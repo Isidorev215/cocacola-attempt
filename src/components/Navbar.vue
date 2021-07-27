@@ -24,7 +24,7 @@
         <transition name="navLinksAnime" appear v-if="!areWeInTheDomain">
         <ul class="nav-item nav-links " :class="{ nouser: !user }">
             <li v-if="user">Admin: {{user.email}}</li>
-            <li><a @click="toMainWebsite">MAIN WEBSITE</a></li>
+            <li><a :href="nextDomainLink">MAIN WEBSITE</a></li>
         </ul>
         </transition>
         
@@ -67,11 +67,6 @@ export default {
     }
     return { handleLogout, user }
   },
-  methods: {
-    toMainWebsite(){
-      window.location.assign(this.nextDomainLink)
-    }
-  },
   created(){
     const host =  window.location.host;
     const parts = host.split('.'); 
@@ -97,10 +92,16 @@ export default {
       }
       
     } 
-    else if (parts[0] === 'admin'){
+    else if (parts[0] === 'admin' || parts[0] === 'admin-cocacola-attempt'){
       this.areWeInTheDomain = false
-      copyParts.shift()
-      tempDomainLink = copyParts.join('.')
+      if(parts[0] === 'admin'){
+        copyParts.shift()
+        tempDomainLink = copyParts.join('.')
+      }
+      if(parts[0] === 'admin-cocacola-attempt'){
+        copyParts[0] = 'cocacola-attempt'
+        tempDomainLink = copyParts.join('.')
+      }
     } 
     else {
       this.areWeInTheDomain = true

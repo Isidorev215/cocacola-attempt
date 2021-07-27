@@ -35,9 +35,9 @@
     </div>
 
     <nav class="route-nav-dots">
-        <router-link :to="{ name: 'Showcase', params: { name: cokeImage.name, id: cokeImage.id, bgColor: cokeImage.backgroundColor }}"
+        <router-link :to="{ name: 'Showcase', params: { id: cokeImage.id, bgColor: cokeImage.backgroundColor }}"
           v-for="cokeImage in cokeImagesArray" :key="cokeImage.id" 
-          :class="{ active: $route.params.name == cokeImage.name }"
+          :class="{ active: $route.params.id == cokeImage.id }"
           >
           .
         </router-link>
@@ -56,7 +56,7 @@ import getCollection from '../composables/getCollection'
 import getDocument from '../composables/getDocument'
 import anime from 'animejs/lib/anime.es.js';
 export default {
-    props: [ "name", "id", "bgColor" ],
+    props: [ "id", "bgColor" ],
     components: { Spinner },
     data(){
       return {
@@ -65,15 +65,6 @@ export default {
         docError: null,
         collectionError: null,
       }
-    },
-    mounted(){
-      const { documents , collectionError } = getCollection('products')
-      this.cokeImagesArray = documents
-      this.collectionError = collectionError
-
-      const { oneDoc, docError } = getDocument('products', this.id)
-      this.routeObj = oneDoc
-      this.docError = docError
     },
     methods: {
       beforeEnterSvg(el){
@@ -108,6 +99,17 @@ export default {
         path.setAttribute('fill', this.bgColor)
       }
     },
+    beforeRouteEnter(to, from, next){
+      const { documents , collectionError } = getCollection('products')
+      const { oneDoc, docError } = getDocument('products', to.params.id)
+      next (vm => {
+        vm.cokeImagesArray = documents
+        vm.collectionError = collectionError
+
+        vm.routeObj = oneDoc
+        vm.docError = docError
+      })
+    },
     beforeRouteUpdate(to, from, next){
       const body = document.getElementById('body');
       const path = document.querySelector('.morph');
@@ -116,8 +118,9 @@ export default {
       // update the current routeObj
       const arrayfromProxy = JSON.parse(JSON.stringify(this.cokeImagesArray))
       const obj = arrayfromProxy.find(obj => {
-        return obj.name == to.params.name
+        return obj.id == to.params.id
       })
+      this.routeObj = obj
 
       // trigger anime.js
       svg.style.zIndex = "1"
@@ -137,9 +140,6 @@ export default {
             else{
               body.style.backgroundColor = to.params.bgColor
             }
-          },
-          change: (anim) => {
-            this.routeObj = obj
           }
       })
       
