@@ -59,6 +59,7 @@ import NutritionPopup from './NutritionPopup'
 import useStorage from '../composables/useStorage'
 import useCollection from '../composables/useCollection'
 import getUser from '../composables/getUser'
+import getDocument from '../composables/getDocument'
 import slugify from '../composables/slugify'
 import validateBeforeSubmit from '../composables/validateBeforeSubmit'
 import { timestamp } from '../firebase/config'
@@ -88,7 +89,8 @@ export default {
     const { user } = getUser()
     const { storageError, url, filePath, uploadImage } = useStorage()
     const { firestoreError, addDoc } = useCollection('products')
-    
+    const { oneDoc, docError } = getDocument('keepcount', 'IRrPjxm082kbPniw5MIE')
+
     const closeModal = () => {
         context.emit('closeModal')
     }
@@ -228,38 +230,52 @@ export default {
       const validateResult = validateBeforeSubmit(tempForValidation)
       if (validateResult){
         isPending.value = true
+        error.value = null
         // do the form stuff
-        await uploadImage(fileObjectToStorage.value, 'Images', 'showcase')
-        if(!storageError.value){
-          await addDoc({
-            title: imageTitle.value,
-            description: description.value,
-            name: slugifiedName,
-            nutrition: JSON.parse(JSON.stringify(nutritionArray.value)),
-            imageUrl: url.value,
-            imagePath: filePath.value,
-            backgroundColor: backgroundColor.value,
-            svgColor: svgColor.value,
-            uploadedBy: [ user.value.uid, user.value.email],
-            createdAt: timestamp(),
-          })
-          if(!firestoreError.value){
-            isPending.value = false
-            errorPara.style.color = 'rgb(86, 162, 68)'
-            error.value = 'Upload Successfull'
-            setTimeout(() => {
-              closeModal()
-            }, 3000)
+        if(oneDoc.value && !docError.value){
+          if(oneDoc.value.count < 8){
+            await uploadImage(fileObjectToStorage.value, 'Images', 'showcase')
+            if(!storageError.value){
+              await addDoc({
+                title: imageTitle.value,
+                description: description.value,
+                name: slugifiedName,
+                nutrition: JSON.parse(JSON.stringify(nutritionArray.value)),
+                imageUrl: url.value,
+                imagePath: filePath.value,
+                backgroundColor: backgroundColor.value,
+                svgColor: svgColor.value,
+                uploadedBy: [ user.value.uid, user.value.email],
+                createdAt: timestamp(),
+              })
+              if(!firestoreError.value){
+                isPending.value = false
+                errorPara.style.color = 'rgb(86, 162, 68)'
+                error.value = 'Upload Successfull'
+                setTimeout(() => {
+                  closeModal()
+                }, 3000)
+              }else{
+                error.value = firestoreError.value
+                isPending.value = false
+                errorPara.style.color = 'rgb(116, 10, 10)'
+              }
+            }else{
+              error.value = storageError.value
+              isPending.value = false
+              errorPara.style.color = 'rgb(116, 10, 10)'
+            }
           }else{
-            error.value = firestoreError.value
+            error.value = `Maximum number of products ${oneDoc.value.count}`
             isPending.value = false
+            errorPara.style.color = 'rgb(116, 10, 10)'
           }
         }else{
-          error.value = storageError.value
+          error.value = docError.value
           isPending.value = false
+          errorPara.style.color = 'rgb(116, 10, 10)'
         }
-      }
-      else{
+      }else{
         error.value = 'Check the form fields: All are required'
       }
     }

@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createMetaManager } from 'vue-meta'
 import App from './App.vue'
 import index from './router/index'
 import admin from './router/admin'
@@ -23,10 +24,11 @@ const routerSelect = () => {
 const router = routerSelect(); 
 
 // refreshing problem
-let app;
+let app = createApp(App).use(router).use(createMetaManager()).mount('#app');
+
 theAuth.onAuthStateChanged(() => {
   if(!app){
-    app = createApp(App).use(router).mount('#app')
+    app = createApp(App).use(router).use(createMetaManager()).mount('#app')
   }
 })
 

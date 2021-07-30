@@ -1,9 +1,35 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2021, 8, 6);
+
+    function getCountDoc(countDocID){
+      return get(/databases/$(database)/documents/keepcount/$(countDocID))
+    }
+
+    match /products/{productID} {
+      function isValidProduct(product){
+        return product.size() == 10
+                && product.keys().hasOnly([ 'title', 'description', 'imagePath', 'imageUrl', 'name', 'nutrition', 'backgroundColor', 'svgColor', 'createdAt', 'uploadedBy'])
+                && product.backgroundColor is string
+                && product.createdAt is timestamp
+                && product.desctiption is string && product.description.size() < 121
+                && product.imagePath is path
+                && product.imageUrl is string
+                && product.name is string
+                && product.nutrition is list && product.nutrition.size() == 5
+                && product.svgColor is string
+                && product.title is string
+                && product.uploadedBy is list && product.uploadedBy.size() == 2 && product.uploadedBy[0] == request.auth.uid && product.uploadedBy[1] == request.auth.token.email;
+      }
+
+      allow read; 
+      allow create: if request.auth != null && isValidProduct(request.resource.data) && getCountDoc('IRrPjxm082kbPniw5MIE').count < 8 ;
+    }
+
+    match /keepcount/{countID} {
+      allow write: if false;
+      allow read: if request.auth != null;
     }
   }
 }

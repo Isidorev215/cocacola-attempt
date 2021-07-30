@@ -18,11 +18,18 @@
 </template>
 
 <script>
+import { useMeta } from 'vue-meta'
 import Spinner from '../components/Spinner'
 import anime from 'animejs/lib/anime.es.js';
 import getCollection from '../composables/getCollection'
 export default {
   name: 'Products',
+  setup(){
+    useMeta({
+      title: "Our Products",
+      description: "Eight products: Cherry, Light, Diet, Vanilla, Classic, New, Light and Life. You decide!!!",
+    })
+  },
   data(){
     return {
       cokeImages: [],

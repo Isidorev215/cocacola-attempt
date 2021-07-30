@@ -15,6 +15,7 @@ const useCollection = (collection) => {
         catch(err) {
             firestoreError.value = err.message
             isPending.value = false
+            console.log(err.message)
         }
     }
 

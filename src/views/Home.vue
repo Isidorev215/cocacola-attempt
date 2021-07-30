@@ -43,11 +43,18 @@
 </template>
 
 <script>
+import { useMeta } from 'vue-meta'
 import anime from 'animejs/lib/anime.es.js';
 import Textcarousel from '@/components/Textcarousel.vue'
 export default {
   name: 'Home',
   components: { Textcarousel },
+  setup(){
+    useMeta({
+      title: "Cocacola",
+      description: "Cocacola, I love this drink! Grab a can of Cocacola from our eight products now. What are you waiting for?",
+    })
+  },
   data(){
     return{
       isPlaying: true

@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { useMeta } from 'vue-meta'
 import Spinner from '../components/Spinner'
 import getCollection from '../composables/getCollection'
 import getDocument from '../composables/getDocument'
@@ -58,6 +59,12 @@ import anime from 'animejs/lib/anime.es.js';
 export default {
     props: [ "id", "bgColor" ],
     components: { Spinner },
+    setup(){
+      useMeta({
+        title: "Our Products",
+        description: "Eight products: Cherry, Light, Diet, Vanilla, Classic, New, Light and Life. You decide!!!",
+      })
+    },
     data(){
       return {
         cokeImagesArray: [],

@@ -34,10 +34,11 @@ export default {
         const content = event.target.nextElementSibling;
         if(content.style.maxHeight){
           content.style.maxHeight = null
+          this.$emit('sendImage', '')
         }else{
           content.style.maxHeight = '600px'
+          this.$emit('sendImage', url)
         }
-        this.$emit('sendImage', url)
       }
     },
     data(){
