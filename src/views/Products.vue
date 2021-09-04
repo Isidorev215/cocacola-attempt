@@ -77,7 +77,7 @@ export default {
     anime({
       targets: ".dynamic-flex-children",
       duration: 1000,
-      translateY: 1000,
+      translateY: 2500,
       delay: anime.stagger(200, {start: 100, direction: "reverse", easing: 'easeOutQuad'}),
       easing: 'easeInOutSine'
     })
@@ -131,6 +131,54 @@ export default {
 .products-container .alternate{
   transform: translateY(200px);
 }
+
+/* Media Queries */
+@media (max-width: 768px){
+  .products-container{
+    overflow-y: auto;
+  }
+  .products-container .dynamic-flex-children{
+    flex-basis: 50%;
+  }
+  .products-container .dynamic-flex-children:nth-child(2n){
+    border-left: 1px solid green;
+  }
+  .products-container .dynamic-flex-children .can-image{
+    width: 100%;
+  }
+  .products-container .dynamic-flex-children p{
+    font-size: 1rem;
+  }
+
+  .products-container .dynamic-flex-children .can-small-size{
+    display: none;
+  }
+}
+
+@media (max-width: 576px){
+  .products-container{
+    overflow-y: auto;
+  }
+  .products-container .dynamic-flex-children{
+    flex-basis: 100%;
+    border-bottom: 1px solid green;
+  }
+  .products-container .dynamic-flex-children:nth-child(2n){
+    border-left: none;
+  }
+  .products-container .dynamic-flex-children .can-image{
+    width: 70%;
+  }
+  .products-container .dynamic-flex-children p{
+    font-size: 1rem;
+  }
+
+  .products-container .dynamic-flex-children .can-small-size{
+    display: none;
+  }
+  
+}
+
 
 
 </style>

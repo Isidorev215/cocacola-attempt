@@ -27,5 +27,5 @@ These are the technologies I have used so far to build this app.
 7. Prerender-spa-plugin for SEO
 8. Firebase Hosting
 
-### n/b: This is not mobile friendly. (yet)
-For now, only view on **desktop screens**
+9. Responsive design using desktop-first approach 
+

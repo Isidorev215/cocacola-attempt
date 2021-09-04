@@ -126,7 +126,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #landing-page{
   height: 90vh;
   overflow-y: hidden;
@@ -135,7 +135,8 @@ export default {
 #landing-page img{
   height: 120%;
 }
-#landing-page .grid-container{
+
+.grid-container{
   width: 100%;
   height: 80%;
   position: absolute;
@@ -148,21 +149,21 @@ export default {
   grid-gap: 0;
 }
 
-#landing-page .grid-container .item1{
+.grid-container .item1{
   grid-area: 1/1/3/2;
   padding: 0 15% 0;
   text-align: left;
 }
-#landing-page .grid-container .item1 h1{
+.grid-container .item1 h1{
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
-#landing-page .grid-container .item1 h6{
+.grid-container .item1 h6{
   font-size: 0.8rem;
   font-weight: normal;
   margin-bottom: 30px;
 }
-#landing-page .grid-container .item1 button{
+.grid-container .item1 button{
   background: none;
   padding: 15px 30px;
   color: white;
@@ -170,23 +171,23 @@ export default {
   border-radius: 25px;
   cursor: pointer;
 }
-#landing-page .grid-container .item1 button:hover{
+.grid-container .item1 button:hover{
   background-color: rgb(116, 10, 10);
 }
 
 /* the carousel grid */
-#landing-page .grid-container .item2{
+.grid-container .item2{
   grid-area: 3/1/4/3;
   position: relative;
 }
 
 /* the video grid */
-#landing-page .grid-container .item3{
+.grid-container .item3{
   grid-area: 3/3/4/4;
   position: relative;
   z-index: 3;
 }
-#landing-page .grid-container .item3 video{
+.grid-container .item3 video{
   width: 100%;
   height: 100%;
   position: absolute;
@@ -194,7 +195,7 @@ export default {
   left: 0;
   background-color: black;
 }
-#landing-page .grid-container .item3 button{
+.grid-container .item3 button{
   position: absolute;
   top: -18px;
   right: -18px;
@@ -209,7 +210,7 @@ export default {
   align-items: center;
 }
 /* this is for the inner-text for both grid item3 and item4  */
-#landing-page .grid-container .inner-text{
+.grid-container .inner-text{
     height: 100%;
     width: 100%;
     padding: 15% 15% 15% 5%;
@@ -218,12 +219,12 @@ export default {
     font-size: 0.8rem;
     position: absolute;
 }
-#landing-page .grid-container .inner-text h4{
+.grid-container .inner-text h4{
   margin-bottom: 10px;
 }
 
 /* the last grid */
-#landing-page .grid-container .item4{
+.grid-container .item4{
   grid-area: 3/4/4/5;
   position: relative;
   z-index: 2;
@@ -232,6 +233,60 @@ export default {
   background-repeat: no-repeat;
   background-size: 75px;
   background-position: 100% 150%;
+}
+
+/* Media Queris */
+@media (max-width: 768px){
+  #landing-page{
+    overflow-y: auto;
+  }
+  #landing-page img{
+    height: 75%;
+    margin-top: 15%;
+  }
+  .grid-container{
+    bottom: unset;
+    top: 0;
+    grid-template-columns: auto;
+    grid-template-rows: 20% 50% 60% 40% 35%;
+    margin-bottom: 2%;
+  }
+  .grid-container .item1{
+    grid-area: 1/1/2/2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .grid-container .item1 h1{
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  .grid-container .item1 h6, .grid-container .item1 button{
+    display: none;
+  }
+  .grid-container .item2{
+    grid-area: 3/1/4/2;
+  }
+  .grid-container .item3{
+    grid-area: 4/1/5/2;
+  }
+  .grid-container .item3  button{
+    top: 0;
+    right: 0;
+    border-radius: unset;
+  }
+  .grid-container .inner-text{
+    padding: 10%;
+  }
+  .grid-container .item4{
+    grid-area: 5/1/6/2;
+  }
+}
+@media (max-width: 992px){
+  #landing-page img{
+    height: 80%;
+    margin-top: 15%;
+  }
 }
 
 </style>

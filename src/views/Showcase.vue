@@ -325,4 +325,50 @@ export default {
 div.alternate{
   transform: translateY(200px);
 }
+
+@media (max-width: 768px){
+  .showcase-container{
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .showcase-container .flex-child{
+    flex-basis: 100%;
+  }
+  .showcase-container .left{
+    margin-top: 0;
+  }
+  .showcase-container .left h1{
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  .showcase-container .left > p{
+    font-size: 0.7rem;
+    margin-bottom: 10px;
+  }
+  #nutritional-facts{
+    height: 45%;
+    margin-bottom: unset;
+  }
+  .left .buy-button{
+    border-radius: unset;
+    width: 100%;
+  }
+
+
+  .showcase-container .corner{
+    display: none;
+  }
+  .route-nav-dots{
+    width: 80%;
+    height: 1.5%;
+    top: unset;
+    right: unset;
+    bottom: 5%;
+    flex-direction: row;
+  }
+  .route-nav-dots a{
+    width: 3%;
+    height: 100%;
+  }
+}
 </style>

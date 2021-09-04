@@ -13,9 +13,14 @@
         </div>
         </transition>
 
+        <div class="mobile-sandwich-menu" @click="toggleNavDown">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
         <transition name="navLinksAnime" appear v-if="areWeInTheDomain">
-        <ul class="nav-item nav-links">
-            <li><router-link :to="{ name: 'Products'}">PRODUCTS</router-link></li>
+        <ul class="nav-item nav-links" :class="{ down: navDown }">
+            <li @click="toggleNavDown"><router-link :to="{ name: 'Products'}">PRODUCTS</router-link></li>
             <li><a>WHAT'S NEW</a></li>
             <li><a>NEWSLETTER</a></li>
             <li><a>CONTACT US</a></li>
@@ -33,7 +38,6 @@
             <router-link :to="{ name: 'Products'}">BUY PRODUCT</router-link>
         </div>
         </transition>
-
         <transition name="purchaseBtnAnime" appear v-if="!areWeInTheDomain">
         <div class="nav-item purchase-btn" v-if="user">
             <a @click="handleLogout">LOGOUT</a>
@@ -52,8 +56,14 @@ export default {
   data(){
     return {
       areWeInTheDomain: true,
-      nextDomainLink: ''
+      nextDomainLink: '',
+      navDown: false
     } 
+  },
+  methods:{
+    toggleNavDown(){
+      this.navDown = !this.navDown
+    }
   },
   setup(props, context){
     const { user } = getUser()
@@ -119,21 +129,21 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #nav {
   padding: 3% 5% 3%;
   position: relative;
   z-index: 10;
   height: 10vh;
 }
-#nav .nav-item a {
+.nav-item a {
   font-weight: light;
   font-size: 0.6rem;
   color: white;
   text-decoration: none;
   cursor: pointer;
 }
-#nav a.router-link-exact-active {
+a.router-link-exact-active {
   color: rgb(116, 10, 10);
 }
 
@@ -143,13 +153,23 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
+.mobile-sandwich-menu{
+  display: none;
+}
+.mobile-sandwich-menu div{
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+  cursor: pointer;
+}
 
-#nav .logo-home{
+.logo-home{
   flex: 1;
   display: flex;
   justify-content: flex-start;
 }
-#nav .logo-home a{
+.logo-home a{
   background-image: url("../assets/cocacola-logo.png");
   background-size: 90px;
   background-repeat: no-repeat;
@@ -159,7 +179,7 @@ export default {
   display: inline-block;
   text-indent: -9999999px;
 }
-#nav .logo-home span{
+.logo-home span{
   background-image: url("../assets/cocacola-logo.png");
   background-size: 90px;
   background-repeat: no-repeat;
@@ -170,35 +190,75 @@ export default {
   text-indent: -9999999px;
 }
 
-#nav .nav-links{
+.nav-links{
   flex: 2;
   display: flex;
   justify-content: space-between;
   list-style: none;
 }
-#nav .nav-links.nouser{
+.nav-links.nouser{
   flex: 2;
   display: flex;
   justify-content: flex-end;
   list-style: none;
 }
 
-#nav .purchase-btn{
+.purchase-btn{
   flex: 1;
   display: flex;
   justify-content: flex-end;
 }
-#nav .purchase-btn a{
+.purchase-btn a{
   border: 2px solid white;
   border-radius: 25px;
   padding: 4% 7%;
 }
-#nav .purchase-btn a:hover{
+.purchase-btn a:hover{
   background-color: rgb(255, 54, 54);
 } 
-#nav .purchase-btn a.router-link-exact-active{
+.purchase-btn a.router-link-exact-active{
   color: white;
   border: 2px solid rgb(255, 54, 54);
+}
+
+/* Media Queries */
+@media (max-width: 768px){
+  .nav-item.logo-home{
+    flex: 12;
+  }
+  .mobile-sandwich-menu{
+    flex: 1;
+    display: block;
+  }
+
+  .nav-item.nav-links{
+    display: block;
+    position: absolute;
+    top: calc(10vh - 2vh);
+    right: 0;
+    width: 100%;
+    padding: 0 5% 0;
+  }
+  .nav-item.nav-links li{
+    display: none;
+    width: 100%;
+    text-align: left;
+    padding: 1% 2% 1% 2%;
+    background-color: white;
+    border-bottom: 1px solid rgb(116, 10, 10);
+  }
+  .nav-item.nav-links.down li{
+    display: block;
+  }
+  .nav-item.nav-links a{
+    font-size: 0.8rem;
+    color: black;
+    display: block;
+  }
+
+  .nav-item.purchase-btn{
+    display: none;
+  }
 }
 
 /* Animation things */
