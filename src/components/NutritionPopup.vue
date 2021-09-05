@@ -178,4 +178,15 @@ export default {
     display: flex;
     justify-content: center;
 }
+
+/* media queries */
+@media (max-width: 768px){
+    .nutrition-popup div p{
+        font-size: 8px;
+    }
+    .nutrition-popup div input{
+        border-right: 2px solid rgb(116, 10, 10);
+        margin-right: 1%;
+    }
+}
 </style>

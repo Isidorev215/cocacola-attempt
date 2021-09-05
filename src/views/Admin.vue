@@ -85,14 +85,14 @@ export default {
   justify-content: space-between;
   align-items: center;
   grid-area: 1/1/2/3;
-  padding: 0 8% 0 8%;
+  padding: 2% 8% 0 8%;
 }
 .accordion-container header h1{
   font-weight: lighter;
 }
 .accordion-container header button{
   border: 1px solid white;
-  border-radius: 25px;
+  border-radius: 5px;
   background: none;
   color: white;
   padding: 1% 2%;
@@ -104,15 +104,21 @@ export default {
 .accordion{
   grid-area: 2/2/3/3;
   overflow: auto;
-  padding-top: 7%;
+  padding-top: 10%;
 }
 .displayImage{
   grid-area: 2/1/3/2;
   margin-right: 5%;
+  display: flex;
+  align-items: center;
 }
 .displayImage img{
   width: 100%;
   height: 100%;
+}
+.displayImage .alternate{
+  width: 100%;
+  text-align: center;
 }
 
 .modal{
@@ -126,6 +132,35 @@ export default {
   overflow: hidden;
   background-color: rgb(0, 0, 0);
   background-color: rgb(0, 0, 0, 0.7);
+}
+
+/* media queries */
+@media (max-width: 768px){
+  .admin-container{
+    overflow-y: auto;
+  }
+  .accordion-container{
+    grid-template-columns: 50% 50%;
+  }
+  .accordion-container header{
+    flex-direction: column;
+    padding: 1% 5% 0 5%;
+  }
+  .accordion-container header h1{
+    font-size: 1.5rem;
+  }
+  .accordion-container header button{
+    width: 50%;
+    padding: 2% 2%;
+    border-radius: 5px;
+  }
+  .accordion{
+    padding-top: 50%;
+  }
+
+  .displayImage img{
+    height: 60%;
+  }
 }
 
 </style>

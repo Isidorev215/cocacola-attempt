@@ -24,7 +24,7 @@ const routerSelect = () => {
 const router = routerSelect(); 
 
 // refreshing problem
-let app = createApp(App).use(router).use(createMetaManager()).mount('#app');
+let app;
 
 theAuth.onAuthStateChanged(() => {
   if(!app){

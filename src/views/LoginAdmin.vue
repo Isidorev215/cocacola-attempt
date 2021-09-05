@@ -144,4 +144,33 @@ export default {
   font-size: 12px;
 }
 
+/* media queries */
+@media (max-width: 768px){
+  .form-container .login{
+    width: 80%;
+  }
+  .form-container .login div input{
+    width: 70%;
+  }
+  .form-container .login div.button button{
+    width: 30%;
+    padding: 2%;
+  }
+}
+
+@media (max-width: 576px){
+  .form-container .login{
+    width: 100%;
+    border-left: unset;
+  }
+  .form-container .login div input{
+    width: 100%;
+  }
+  .form-container .login div.button button{
+    width: 30%;
+    padding: 2%;
+  }
+}
+
+
 </style>

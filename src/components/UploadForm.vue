@@ -395,4 +395,24 @@ export default {
   color: rgb(255, 0, 0);
   font-size: 12px;
 }
+
+/* media queries */
+@media (max-width: 768px){
+  .staging-area{
+    width: 50%;
+  }
+  .upload-form{
+    width: 50%;
+  }
+  .upload-form div{
+    width: 100%;
+  }
+  .upload-form .file-info{
+    font-size: 10px;
+  }
+
+  .upload-form div.backgroundColor, .upload-form div.svgColor{
+    width: 100%;
+  }
+}
 </style>

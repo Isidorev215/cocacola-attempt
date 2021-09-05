@@ -178,4 +178,31 @@ export default {
   font-size: 0.8rem;
 }
 
+/* media queries */
+@media (max-width: 768px){
+  .accordion-btn{
+    padding: 15px;
+  }
+
+  .accordion-content .title{
+    font-size: 1rem;
+    letter-spacing: unset;
+    text-align: center;
+  }
+  .accordion-content ul.info li{
+    font-size: 0.7rem;
+  }
+  .accordion-content ul.nutrition li{
+    margin-right: 2px;
+    padding: 1% 0 1% 1%;
+    border-radius: unset;
+  }
+  .accordion-content ul.nutrition li h6, .accordion-content ul.nutrition p{
+    font-size: 0.4rem;
+  }
+  .accordion-content ul.nutrition li p:last-child{
+    font-size: 0.3rem;
+  } 
+}
+
 </style>

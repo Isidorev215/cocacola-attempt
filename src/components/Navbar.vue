@@ -27,9 +27,10 @@
         </ul>
         </transition>
         <transition name="navLinksAnime" appear v-if="!areWeInTheDomain">
-        <ul class="nav-item nav-links " :class="{ nouser: !user }">
+        <ul class="nav-item nav-links " :class="{ nouser: !user, down: navDown }">
             <li v-if="user">Admin: {{user.email}}</li>
             <li><a :href="nextDomainLink">MAIN WEBSITE</a></li>
+            <li v-if="user"><a @click="handleLogout">LOGOUT</a></li>
         </ul>
         </transition>
         
@@ -38,11 +39,11 @@
             <router-link :to="{ name: 'Products'}">BUY PRODUCT</router-link>
         </div>
         </transition>
-        <transition name="purchaseBtnAnime" appear v-if="!areWeInTheDomain">
+        <!-- <transition name="purchaseBtnAnime" appear v-if="!areWeInTheDomain">
         <div class="nav-item purchase-btn" v-if="user">
             <a @click="handleLogout">LOGOUT</a>
         </div>
-        </transition>
+        </transition> -->
     
     </nav>
 </template>
@@ -244,6 +245,7 @@ a.router-link-exact-active {
     width: 100%;
     text-align: left;
     padding: 1% 2% 1% 2%;
+    color: black;
     background-color: white;
     border-bottom: 1px solid rgb(116, 10, 10);
   }
